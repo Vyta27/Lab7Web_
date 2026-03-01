@@ -70,6 +70,12 @@ $routes->get('/faqs', 'Page::faqs');
 php spark routes
 ```
 
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/2e5c7f23-2e97-4a33-8e9a-cb788fcfeba3" />
+
+- Selanjutnya coba akses route yang telah dibuat dengan mengakses alamat url
+http://localhost:8080/about
+
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/d8e54cd3-6dea-4378-b18a-0edc092111b3" />
 
 ## Langkah 8
 - Membuat Controller Page
