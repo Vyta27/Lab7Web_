@@ -28,7 +28,7 @@ extension=openssl
 - Ubah nama direktory framework-4.x.xx menjadi ci4.
 -  Buka browser dengan alamat http://localhost/lab11_ci/ci4/public/
 -  
-  <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/a769ad6a-7798-4b32-a654-7ba3a9bce8ca" />
+  <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/9604f5f3-f8b7-4acc-9d71-ad2152bdff98" />
   
 ## Langkah 4
 - Menyimpan Project CodeIgniter
@@ -46,16 +46,11 @@ C:\xampp\htdocs\lab11_ci\ci4
 ```
 php spark serve
 ```
-- Output akan muncul :
 
-```
-CodeIgniter development server started on http://localhost:8080
-```
-(gambar)
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/4b5705a3-4449-4d01-8b20-9a0b27552854" />
 
 ## Langkah 6
 - Buka browser: `http://localhost:8080`
-(gambar)
 
 ## Langkah 7
 - Konfigurasi Routing
@@ -67,8 +62,15 @@ $routes->get('/', 'Home::index');
 $routes->get('/about', 'Page::about');
 $routes->get('/contact', 'Page::contact');
 $routes->get('/faqs', 'Page::faqs');
-$routes->setAutoRoute(true);
 ```
+
+- buka CLI dan jalankan perintah berikut :
+  
+```
+php spark routes
+```
+
+
 ## Langkah 8
 - Membuat Controller Page
 - Buat file : `app/Controllers/Page.php`
