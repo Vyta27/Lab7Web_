@@ -4,11 +4,11 @@
 
 # Praktikum 1 : Lab7Web
 
-##Langkah 1 
+## Langkah 1 
 - Membuka XAMPP
 - Klik tombol Start pada Apache
 
-##Langkah 2
+## Langkah 2
 - lik tombol Config pada Apache
 - Pilih php.ini
 - Pastikan ekstensi berikut aktif (tidak ada tanda ; di depan):
@@ -22,14 +22,15 @@ extension=openssl
 - simpan file
 - restart apache
 
-##Langkah 3
+## Langkah 3
 - Unduh Codeigniter dari website https://codeigniter.com/download 
 - Extrak file zip Codeigniter ke direktori htdocs/lab11_ci.
 - Ubah nama direktory framework-4.x.xx menjadi ci4.
 -  Buka browser dengan alamat http://localhost/lab11_ci/ci4/public/
-(gambar welcome)
-
-##Langkah 4
+-  
+  <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/a769ad6a-7798-4b32-a654-7ba3a9bce8ca" />
+  
+## Langkah 4
 - Menyimpan Project CodeIgniter
 - Pastikan project berada di:
 
@@ -37,7 +38,7 @@ extension=openssl
 C:\xampp\htdocs\lab11_ci\ci4
 ```
 
-##Langkah 5
+## Langkah 5
 - Menjalankan Server CodeIgniter
 - Buka Command Prompt di folder project: `cd C:\xampp\htdocs\lab11_ci\ci4`
 - Lalu jalankan :
@@ -52,11 +53,11 @@ CodeIgniter development server started on http://localhost:8080
 ```
 (gambar)
 
-##Langkah 6
+## Langkah 6
 - Buka browser: `http://localhost:8080`
 (gambar)
 
-##Langkah 7
+## Langkah 7
 - Konfigurasi Routing
 - Buka file: `app/Config/Routes.php`
 - Tambahkan :
@@ -68,7 +69,7 @@ $routes->get('/contact', 'Page::contact');
 $routes->get('/faqs', 'Page::faqs');
 $routes->setAutoRoute(true);
 ```
-##Langkah 8
+## Langkah 8
 - Membuat Controller Page
 - Buat file : `app/Controllers/Page.php`
 - isi :
@@ -106,7 +107,7 @@ class Page extends BaseController
 }
 ```
 
-##Langkah 9 
+## Langkah 9 
 - Mengubah Controller Home
 - Buka : `app/Controllers/Home.php`
 - Ubah menjadi :
@@ -128,7 +129,7 @@ class Home extends BaseController
 }
 ```
 
-##Langkah 10
+## Langkah 10
 - Membuat View
 - file : `app/Views/about.php`
 
@@ -145,7 +146,7 @@ class Home extends BaseController
 ```
 (gambar)
 
-##Langkah 11
+## Langkah 11
 - Membuat Layout Web dengan CSS
 - File : `public/style.css`
 
@@ -362,7 +363,7 @@ button.btn:hover {
     background-color: #2b83ea;
 }
 
-##Langkah 12
+## Langkah 12
 - Membuat Template Layout
 - Buat folder : `app/Views/template`
 - header.php
