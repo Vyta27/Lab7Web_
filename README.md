@@ -425,6 +425,12 @@ button.btn:hover {
 </html>
 ```
 
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/6f6e3600-0c69-4cf6-aef0-dc350b5cc684" />
 
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/7a6c4139-150e-454c-ad23-d11c49920b36" />
+
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/66ca6300-bfc9-40cb-88ea-b4093d51d8a9" />
+
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/fd03cc5e-0744-4f7c-891e-654737b9a1b6" />
 
 
