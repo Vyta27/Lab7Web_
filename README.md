@@ -114,7 +114,9 @@ class Page extends BaseController
     }
 }
 ```
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/f5453ca5-4314-487b-a7d8-eb8e3b269543" />
 
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/f98a3ec8-d9b8-41ce-b429-366c87bcd12f" />
 ## Langkah 9 
 - Mengubah Controller Home
 - Buka : `app/Controllers/Home.php`
