@@ -1,6 +1,6 @@
 ## Nama   : Navyta Budi Yulia
 ## NIM    : 312410184
-## Kelas  : i241B
+## Kelas  : I241B
 
 # Praktikum 1 : Lab7Web
 
@@ -433,4 +433,286 @@ button.btn:hover {
 
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/fd03cc5e-0744-4f7c-891e-654737b9a1b6" />
 
+## Langkah 13
+- Membuat Database
+```
+CREATE DATABASE lab_ci4;
+```
+- Membuat Tabel
+```
+CREATE TABLE artikel (
+id INT(11) auto_increment,
+judul VARCHAR(200) NOT NULL,
+isi TEXT,
+gambar VARCHAR(200),
+status TINYINT(1) DEFAULT 0,
+slug VARCHAR(200),
+PRIMARY KEY(id)
+);
+```
 
+## Langkah 14
+- Konfigurasi Routing
+- `app/Config/Routes.php`
+
+```
+<?php
+
+use CodeIgniter\Router\RouteCollection;
+
+/**
+ * @var RouteCollection $routes
+ */
+
+$routes->get('/', 'Home::index');
+$routes->get('/about', 'Page::about');
+$routes->get('/contact', 'Page::contact');
+$routes->get('/faqs', 'Page::faqs');
+
+$routes->get('/artikel','Artikel::index');
+$routes->get('/artikel/(:any)', 'Artikel::view/$1');
+
+$routes->setAutoRoute(true);
+
+$routes->group('admin', function($routes) {
+    $routes->get('artikel', 'Artikel::admin_index');
+    $routes->add('artikel/add', 'Artikel::add');
+    $routes->add('artikel/edit/(:any)', 'Artikel::edit/$1');
+    $routes->get('artikel/delete/(:any)', 'Artikel::delete/$1');
+});
+```
+
+## Langkah 15
+- Membuat Model Artikel
+- `app/Models/ArtikelModel.php`
+
+```
+<?php
+
+namespace App\Models;
+use CodeIgniter\Model;
+
+class ArtikelModel extends Model
+{
+    protected $table = 'artikel';
+    protected $primaryKey = 'id';
+
+    protected $allowedFields = [
+        'judul',
+        'isi',
+        'gambar',
+        'status',
+        'slug'
+    ];
+}}
+```
+
+## Langkah 16
+- Membuat Controller Artikel
+- `app/Controllers/Artikel.php`
+
+```
+<?php
+
+namespace App\Controllers;
+
+use App\Models\ArtikelModel;
+
+class Artikel extends BaseController
+{
+
+    public function index()
+    {
+        $title = 'Daftar Artikel';
+        $model = new ArtikelModel();
+        $artikel = $model->findAll();
+
+        return view('artikel/index', compact('artikel','title'));
+    }
+
+    public function view($slug)
+    {
+        $model = new ArtikelModel();
+        $artikel = $model->where(['slug' => $slug])->first();
+
+        if (!$artikel)
+        {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        $title = $artikel['judul'];
+
+        return view('artikel/detail', compact('artikel','title'));
+    }
+
+    public function admin_index()
+    {
+        $title = 'Daftar Artikel';
+        $model = new ArtikelModel();
+        $artikel = $model->findAll();
+
+        return view('artikel/admin_index', compact('artikel','title'));
+    }
+}
+```
+
+## Langkah 17
+- Membuat View Daftar Artikel
+- `app/Views/artikel/index.php`
+
+```
+<?= $this->include('template/header'); ?>
+
+<?php foreach ($artikel as $row): ?>
+
+<article class="entry">
+
+<h2>
+<a href="<?= base_url('/artikel/' . $row['slug']);?>">
+<?= $row['judul']; ?>
+</a>
+</h2>
+
+<p><?= substr($row['isi'],0,200); ?></p>
+
+</article>
+
+<?php endforeach; ?>
+
+<?= $this->include('template/footer'); ?>
+```
+
+## Langkah 14
+- Membuat Halaman Admin Artikel
+- `app/Views/artikel/admin_index.php`
+
+```
+<?= $this->include('template/header'); ?>
+
+<h2><?= $title; ?></h2>
+
+<a href="<?= base_url('/admin/artikel/add'); ?>" class="btn">Tambah Artikel</a>
+
+<table class="table">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Judul</th>
+<th>Status</th>
+<th>Aksi</th>
+</tr>
+</thead>
+
+<tbody>
+
+<?php if($artikel): foreach($artikel as $row): ?>
+
+<tr>
+
+<td><?= $row['id']; ?></td>
+
+<td>
+<b><?= $row['judul']; ?></b>
+<p><small><?= substr($row['isi'],0,50); ?></small></p>
+</td>
+
+<td><?= $row['status']; ?></td>
+
+<td>
+
+<a href="<?= base_url('/admin/artikel/edit/'.$row['id']); ?>">Ubah</a>
+
+<a onclick="return confirm('Yakin menghapus data?');"
+href="<?= base_url('/admin/artikel/delete/'.$row['id']); ?>">
+Hapus
+</a>
+
+</td>
+
+</tr>
+
+<?php endforeach; else: ?>
+
+<tr>
+<td colspan="4">Belum ada data.</td>
+</tr>
+
+<?php endif; ?>
+
+</tbody>
+</table>
+
+<?= $this->include('template/footer'); ?>
+```
+
+## Langkah 15
+- Membuat Form Tambah Artikel
+- `app/Views/artikel/form_add.php`
+
+```
+<?= $this->include('template/header'); ?>
+
+<h2><?= $title; ?></h2>
+
+<form action="" method="post">
+
+<p>
+<input type="text" name="judul">
+</p>
+
+<p>
+<textarea name="isi" cols="50" rows="10"></textarea>
+</p>
+
+<p>
+<input type="submit" value="Kirim">
+</p>
+
+</form>
+
+<?= $this->include('template/footer'); ?>
+```
+
+## Langkah 16
+- Membuat Form Edit Artikel
+- `app/Views/artikel/form_edit.php`
+
+```
+<?= $this->include('template/header'); ?>
+
+<h2><?= $title; ?></h2>
+
+<form action="" method="post">
+
+<p>
+<input type="text" name="judul" value="<?= $data['judul']; ?>">
+</p>
+
+<p>
+<textarea name="isi" cols="50" rows="10">
+<?= $data['isi']; ?>
+</textarea>
+</p>
+
+<p>
+<input type="submit" value="Kirim">
+</p>
+
+</form>
+
+<?= $this->include('template/footer'); ?>
+```
+
+## Langkah 17
+- Membuat Fungsi Hapus Artikel
+
+```
+public function delete($id)
+{
+    $artikel = new ArtikelModel();
+    $artikel->delete($id);
+
+    return redirect('admin/artikel');
+}
+```
