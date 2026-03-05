@@ -604,7 +604,7 @@ mencapai lebih dari 2000 tahun.', 'artikel-kedua');
 
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/02f9b6f7-18f9-4a7b-8f87-e93244d9702b" />
 
-## Langkah 14
+## Langkah 18
 - Membuat Tampilan Detail Artikel
 - Tambahkan fungsi baru pada Controller Artikel dengan nama view().
 
@@ -625,7 +625,7 @@ return view('artikel/detail', compact('artikel', 'title'));
 }
 ```
 
-## Langkah 15
+## Langkah 19
 - Membuat View Detail
 - Buat view baru untuk halaman detail dengan nama app/views/artikel/detail.php.
 
@@ -640,7 +640,7 @@ $artikel['judul']; ?>">
 <?= $this->include('template/footer'); ?>
 ```
 
-## Langkah 16
+## Langkah 20
 - Buka Kembali file app/config/Routes.php, kemudian tambahkan routing untuk artikel detail.
 
 ```
@@ -649,7 +649,7 @@ $routes->get('/artikel/(:any)', 'Artikel::view/$1');
 
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/fe37313f-7a8c-44fb-ac35-5dd20d242635" />
 
-## Langkah 17
+## Langkah 21
 - Membuat Halaman Admin Artikel
 - `app/Views/artikel/admin_index.php`
 
@@ -715,9 +715,9 @@ Hapus
 
 - Akses menu admin dengan url http://localhost:8080/admin/artikel
 
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/779af90c-0876-46cd-859f-ac871cb60336" />
 
-
-## Langkah 16
+## Langkah 22
 - Membuat Form Tambah Artikel
 - `app/Views/artikel/form_add.php`
 
