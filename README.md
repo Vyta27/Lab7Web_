@@ -602,6 +602,52 @@ klasik dari era 45 sebelum masehi, hingga bisa dipastikan usianya telah
 mencapai lebih dari 2000 tahun.', 'artikel-kedua');
 ```
 
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/02f9b6f7-18f9-4a7b-8f87-e93244d9702b" />
+
+## Langkah 14
+- Membuat Tampilan Detail Artikel
+- Tambahkan fungsi baru pada Controller Artikel dengan nama view().
+
+```
+public function view($slug)
+{
+$model = new ArtikelModel();
+$artikel = $model->where([
+'slug' => $slug
+])->first();
+// Menampilkan error apabila data tidak ada.
+if (!$artikel)
+{
+throw PageNotFoundException::forPageNotFound();
+}
+$title = $artikel['judul'];
+return view('artikel/detail', compact('artikel', 'title'));
+}
+```
+
+## Langkah 15
+- Membuat View Detail
+- Buat view baru untuk halaman detail dengan nama app/views/artikel/detail.php.
+
+```
+<?= $this->include('template/header'); ?>
+<article class="entry">
+<h2><?= $artikel['judul']; ?></h2>
+<img src="<?= base_url('/gambar/' . $artikel['gambar']);?>" alt="<?=
+$artikel['judul']; ?>">
+<p><?= $row['isi']; ?></p>
+</article>
+<?= $this->include('template/footer'); ?>
+```
+
+## Langkah 16
+- Buka Kembali file app/config/Routes.php, kemudian tambahkan routing untuk artikel detail.
+
+```
+$routes->get('/artikel/(:any)', 'Artikel::view/$1');
+```
+
+
 ## Langkah 14
 - Membuat Halaman Admin Artikel
 - `app/Views/artikel/admin_index.php`
