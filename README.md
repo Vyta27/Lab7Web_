@@ -745,7 +745,9 @@ Hapus
 <?= $this->include('template/footer'); ?>
 ```
 
-## Langkah 16
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/8f801d18-1f1a-47ca-958a-30c84ef5363e" />
+
+## Langkah 23
 - Membuat Form Edit Artikel
 - `app/Views/artikel/form_edit.php`
 
@@ -774,8 +776,9 @@ Hapus
 
 <?= $this->include('template/footer'); ?>
 ```
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/99cbd4dd-7b31-4502-be93-81b4ab46cd9a" />
 
-## Langkah 17
+## Langkah 24
 - Membuat Fungsi Hapus Artikel
 
 ```
