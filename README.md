@@ -647,8 +647,9 @@ $artikel['judul']; ?>">
 $routes->get('/artikel/(:any)', 'Artikel::view/$1');
 ```
 
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/fe37313f-7a8c-44fb-ac35-5dd20d242635" />
 
-## Langkah 14
+## Langkah 17
 - Membuat Halaman Admin Artikel
 - `app/Views/artikel/admin_index.php`
 
@@ -712,7 +713,11 @@ Hapus
 <?= $this->include('template/footer'); ?>
 ```
 
-## Langkah 15
+- Akses menu admin dengan url http://localhost:8080/admin/artikel
+
+
+
+## Langkah 16
 - Membuat Form Tambah Artikel
 - `app/Views/artikel/form_add.php`
 
