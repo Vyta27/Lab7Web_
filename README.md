@@ -957,7 +957,7 @@ class Home extends BaseController
 }
 ```
 
-<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/ff5ef71e-954c-45a1-8ab9-e5bc85c6db74" />
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/02706568-a542-4cd6-9c26-6cd8fcc969d6" />
 
 ## Langkah 30
 - Modifikasi View Artikel
@@ -1008,7 +1008,8 @@ class Home extends BaseController
 <?= $this->endSection() ?>
 ```
 
-SS ARTIKEL
+
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/b55df775-da99-45f0-b674-75b7efc21914" />
 
 ## Struktur folder akhir
 
