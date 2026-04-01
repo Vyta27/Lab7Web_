@@ -805,7 +805,6 @@ ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP;
 
 UPDATE artikel SET created_at = NOW() WHERE created_at IS NULL;
 ```
-SS
 
 ## Langkah 26
 - Update ArtikelModel.php
@@ -958,7 +957,7 @@ class Home extends BaseController
 }
 ```
 
-SS HOME
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/ff5ef71e-954c-45a1-8ab9-e5bc85c6db74" />
 
 ## Langkah 30
 - Modifikasi View Artikel
