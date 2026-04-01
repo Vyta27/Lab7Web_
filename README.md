@@ -794,3 +794,248 @@ public function delete($id)
     return redirect('admin/artikel');
 }
 ```
+
+# Praktikum 3
+## Langkah 25
+- Menambahkan Kolom `created_at` pada Tabel Artikel
+
+```sql
+ALTER TABLE artikel 
+ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP;
+
+UPDATE artikel SET created_at = NOW() WHERE created_at IS NULL;
+```
+SS
+
+## Langkah 26
+- Update ArtikelModel.php
+- Tambahkan field `created_at` dan aktifkan timestamps pada file `app/Models/ArtikelModel.php`:
+
+```php
+<?php
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class ArtikelModel extends Model
+{
+    protected $table            = 'artikel';
+    protected $primaryKey       = 'id';
+    protected $useAutoIncrement = true;
+    protected $allowedFields    = ['judul', 'isi', 'status', 'slug', 'gambar', 'created_at'];
+    protected $useTimestamps    = true;
+    protected $createdField     = 'created_at';
+    protected $updatedField     = '';
+}
+```
+
+## Langkah 26
+- Membuat Layout Utama
+- Buat folder `layout` di dalam `app/Views/`, kemudian buat file `main.php`:
+
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><?= $title ?? 'My Website' ?></title>
+    <link rel="stylesheet" href="<?= base_url('/style.css'); ?>">
+</head>
+<body>
+<div id="container">
+    <header>
+        <h1>Layout Sederhana</h1>
+    </header>
+    <nav>
+        <a href="<?= base_url('/'); ?>">Home</a>
+        <a href="<?= base_url('/artikel'); ?>">Artikel</a>
+        <a href="<?= base_url('/about'); ?>">About</a>
+        <a href="<?= base_url('/contact'); ?>">Kontak</a>
+    </nav>
+    <section id="wrapper">
+        <section id="main">
+            <?= $this->renderSection('content') ?>
+        </section>
+        <aside id="sidebar">
+            <?= view_cell('App\\Cells\\ArtikelTerkini::render') ?>
+            <div class="widget-box">
+                <h3 class="title">Widget Header</h3>
+                <ul>
+                    <li><a href="#">Widget Link</a></li>
+                    <li><a href="#">Widget Link</a></li>
+                </ul>
+            </div>
+            <div class="widget-box">
+                <h3 class="title">Widget Text</h3>
+                <p>Vestibulum lorem elit, iaculis in nisl volutpat,
+                malesuada tincidunt arcu. Proin in leo fringilla.</p>
+            </div>
+        </aside>
+    </section>
+    <footer>
+        <p>&copy; 2021 - Universitas Pelita Bangsa</p>
+    </footer>
+</div>
+</body>
+</html>
+```
+
+## Langkah 27
+- Membuat View Cell ArtikelTerkini
+- Buat folder `Cells` di dalam `app/`, kemudian buat file `ArtikelTerkini.php`:
+
+```php
+<?php
+namespace App\Cells;
+
+use App\Models\ArtikelModel;
+
+class ArtikelTerkini
+{
+    public function render(): string
+    {
+        $model   = new ArtikelModel();
+        $artikel = $model->orderBy('created_at', 'DESC')->limit(5)->findAll();
+
+        return view('components/artikel_terkini', ['artikel' => $artikel]);
+    }
+}
+```
+
+## Langkah 28
+- Membuat View untuk View Cell
+- Buat folder `components` di dalam `app/Views/`, kemudian buat file `artikel_terkini.php`:
+
+```php
+<div class="widget-box">
+    <h3 class="title">Artikel Terkini</h3>
+    <ul>
+        <?php if (!empty($artikel)): ?>
+            <?php foreach ($artikel as $row): ?>
+                <li>
+                    <a href="<?= base_url('/artikel/' . $row['slug']) ?>">
+                        <?= esc($row['judul']) ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <li>Belum ada artikel.</li>
+        <?php endif; ?>
+    </ul>
+</div>
+```
+
+## Langkah 29
+- Modifikasi View Home
+
+```php
+<?= $this->extend('layout/main') ?>
+<?= $this->section('content') ?>
+
+<h1><?= $title; ?></h1>
+<hr>
+<p><?= $content; ?></p>
+
+<?= $this->endSection() ?>
+```
+
+- Ubah juga `app/Controllers/Home.php`:
+
+```php
+<?php
+namespace App\Controllers;
+
+class Home extends BaseController
+{
+    public function index(): string
+    {
+        $data = [
+            'title'   => 'Halaman Utama',
+            'content' => 'Selamat datang di website Portal Berita.',
+        ];
+        return view('home', $data);
+    }
+}
+```
+
+SS HOME
+
+## Langkah 30
+- Modifikasi View Artikel
+- Ubah file `app/Views/artikel/index.php`:
+
+```php
+<?= $this->extend('layout/main') ?>
+<?= $this->section('content') ?>
+
+<h2><?= $title; ?></h2>
+
+<?php if ($artikel): foreach ($artikel as $row): ?>
+<article class="entry">
+    <h2>
+        <a href="<?= base_url('/artikel/' . $row['slug']); ?>">
+            <?= $row['judul']; ?>
+        </a>
+    </h2>
+    <?php if ($row['gambar']): ?>
+    <img src="<?= base_url('/gambar/' . $row['gambar']); ?>" alt="<?= $row['judul']; ?>">
+    <?php endif; ?>
+    <p><?= substr($row['isi'], 0, 200); ?>...</p>
+</article>
+<hr class="divider" />
+<?php endforeach; else: ?>
+<article class="entry">
+    <h2>Belum ada data.</h2>
+</article>
+<?php endif; ?>
+
+<?= $this->endSection() ?>
+```
+
+- Ubah juga file `app/Views/artikel/detail.php`:
+
+```php
+<?= $this->extend('layout/main') ?>
+<?= $this->section('content') ?>
+
+<article class="entry">
+    <h2><?= $artikel['judul']; ?></h2>
+    <?php if ($artikel['gambar']): ?>
+    <img src="<?= base_url('/gambar/' . $artikel['gambar']); ?>" alt="<?= $artikel['judul']; ?>">
+    <?php endif; ?>
+    <p><?= $artikel['isi']; ?></p>
+</article>
+
+<?= $this->endSection() ?>
+```
+
+SS ARTIKEL
+
+## Struktur folder akhir
+
+ ```
+app/
+├── Cells/
+│   └── ArtikelTerkini.php
+├── Controllers/
+│   ├── Artikel.php
+│   └── Home.php
+├── Models/
+│   └── ArtikelModel.php
+└── Views/
+    ├── layout/
+    │   └── main.php
+    ├── components/
+    │   └── artikel_terkini.php
+    ├── artikel/
+    │   ├── index.php
+    │   ├── detail.php
+    │   ├── form_add.php
+    │   ├── form_edit.php
+    │   └── admin_index.php
+    └── home.php
+```
+
+# Praktikum 4
+
+## Langkah 31
