@@ -1039,3 +1039,357 @@ app/
 # Praktikum 4
 
 ## Langkah 31
+- Membuat Tabel User di Database
+- Buka phpMyAdmin, pilih database `lab_ci4`, jalankan query berikut:
+
+```sql
+CREATE TABLE user (
+    id INT(11) auto_increment,
+    username VARCHAR(200) NOT NULL,
+    useremail VARCHAR(200),
+    userpassword VARCHAR(200),
+    PRIMARY KEY(id)
+);
+```
+
+SS
+
+## Langkah 32
+- Membuat Model User
+- Buat file baru `app/Models/UserModel.php`:
+
+```php
+<?php
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class UserModel extends Model
+{
+    protected $table            = 'user';
+    protected $primaryKey       = 'id';
+    protected $useAutoIncrement = true;
+    protected $allowedFields    = ['username', 'useremail', 'userpassword'];
+}
+```
+
+## Langkah 33
+- Membuat Controller User
+- Buat file baru `app/Controllers/User.php` dengan method `index()`, `login()`, dan `logout()`:
+
+```php
+<?php
+namespace App\Controllers;
+
+use App\Models\UserModel;
+
+class User extends BaseController
+{
+    public function index()
+    {
+        $title = 'Daftar User';
+        $model = new UserModel();
+        $users = $model->findAll();
+        return view('user/index', compact('users', 'title'));
+    }
+
+    public function login()
+    {
+        helper(['form']);
+        $email    = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+
+        if (!$email) {
+            return view('user/login');
+        }
+
+        $session = session();
+        $model   = new UserModel();
+        $login   = $model->where('useremail', $email)->first();
+
+        if ($login) {
+            $pass = $login['userpassword'];
+            if (password_verify($password, $pass)) {
+                $login_data = [
+                    'user_id'    => $login['id'],
+                    'user_name'  => $login['username'],
+                    'user_email' => $login['useremail'],
+                    'logged_in'  => TRUE,
+                ];
+                $session->set($login_data);
+                return redirect('admin/artikel');
+            } else {
+                $session->setFlashdata("flash_msg", "Password salah.");
+                return redirect()->to('/user/login');
+            }
+        } else {
+            $session->setFlashdata("flash_msg", "Email tidak terdaftar.");
+            return redirect()->to('/user/login');
+        }
+    }
+
+    public function logout()
+    {
+        session()->destroy();
+        return redirect()->to('/user/login');
+    }
+}
+```
+
+## Langkah 34
+
+- Membuat View Login
+- Buat folder `user` di `app/Views/`, kemudian buat file `login.php`:
+
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="<?= base_url('/style.css'); ?>">
+</head>
+<body>
+<div id="login-wrapper">
+    <h1>Sign In</h1>
+
+    <?php if (session()->getFlashdata('flash_msg')): ?>
+    <div class="alert alert-danger">
+        <?= session()->getFlashdata('flash_msg') ?>
+    </div>
+    <?php endif; ?>
+
+    <form action="" method="post">
+        <div class="mb-3">
+            <label for="InputForEmail">Email address</label>
+            <input type="email" name="email" class="form-control"
+                   id="InputForEmail" value="<?= set_value('email') ?>">
+        </div>
+        <div class="mb-3">
+            <label for="InputForPassword">Password</label>
+            <input type="password" name="password"
+                   class="form-control" id="InputForPassword">
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+</body>
+</html>
+```
+
+## Langkah 35
+- Menambahkan CSS untuk Halaman Login
+- Tambahkan kode berikut di bagian paling bawah `public/style.css`:
+
+```css
+/* Login Page */
+#login-wrapper {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+#login-wrapper h1 {
+    margin-bottom: 20px;
+    color: #1f5faa;
+}
+
+#login-wrapper .mb-3 {
+    margin-bottom: 15px;
+}
+
+#login-wrapper label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#login-wrapper input[type="email"],
+#login-wrapper input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.btn-primary {
+    background-color: #1f5faa;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 15px;
+}
+
+.btn-primary:hover {
+    background-color: #2b83ea;
+}
+```
+
+SS LOGIN
+
+## Langkah 36
+- Membuat Database Seeder
+- Buka terminal/CMD di folder project, jalankan perintah:
+
+```bash
+php spark make:seeder UserSeeder
+```
+
+-  Buka file `app/Database/Seeds/UserSeeder.php`, isi dengan kode berikut:
+
+```php
+<?php
+namespace App\Database\Seeds;
+
+use CodeIgniter\Database\Seeder;
+
+class UserSeeder extends Seeder
+{
+    public function run()
+    {
+        $model = model('UserModel');
+        $model->insert([
+            'username'     => 'admin',
+            'useremail'    => 'admin@email.com',
+            'userpassword' => password_hash('admin123', PASSWORD_DEFAULT),
+        ]);
+    }
+}
+```
+  
+- Jalankan seeder dengan perintah:
+
+```bash
+php spark db:seed UserSeeder
+```
+
+SS TABEL USER
+
+## Langkah 37
+- Membuat Auth Filter
+- Buat folder `Filters` di `app/`, kemudian buat file `Auth.php`:
+
+
+```php
+<?php
+namespace App\Filters;
+
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Filters\FilterInterface;
+
+class Auth implements FilterInterface
+{
+    public function before(RequestInterface $request, $arguments = null)
+    {
+        // Jika user belum login, redirect ke halaman login
+        if (!session()->get('logged_in')) {
+            return redirect()->to('/user/login');
+        }
+    }
+
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+    {
+        // Do something here
+    }
+}
+```
+
+## Langkah 38
+- Mendaftarkan Filter di Config
+- Buka `app/Config/Filters.php`, tambahkan `auth` di bagian `$aliases`:
+
+```php
+public array $aliases = [
+    'csrf'          => CSRF::class,
+    'toolbar'       => DebugToolbar::class,
+    'honeypot'      => Honeypot::class,
+    'invalidchars'  => InvalidChars::class,
+    'secureheaders' => SecureHeaders::class,
+    'cors'          => Cors::class,
+    'forcehttps'    => ForceHTTPS::class,
+    'pagecache'     => PageCache::class,
+    'performance'   => PerformanceMetrics::class,
+    'auth'          => \App\Filters\Auth::class,  // ← tambahkan baris ini
+];
+```
+
+## Langkah 39 
+- Update Routes
+- Buka `app/Config/Routes.php`, tambahkan route login/logout dan filter auth pada group admin:
+
+```php
+<?php
+
+use CodeIgniter\Router\RouteCollection;
+
+$routes->get('/', 'Home::index');
+$routes->get('/about', 'Page::about');
+$routes->get('/contact', 'Page::contact');
+$routes->get('/faqs', 'Page::faqs');
+$routes->get('/artikel', 'Artikel::index');
+$routes->get('/artikel/(:any)', 'Artikel::view/$1');
+
+// Route Login & Logout
+$routes->get('/user/login', 'User::login');
+$routes->post('/user/login', 'User::login');
+$routes->get('/user/logout', 'User::logout');
+
+$routes->setAutoRoute(true);
+
+// Route Admin - dilindungi filter auth
+$routes->group('admin', ['filter' => 'auth'], function($routes) {
+    $routes->get('artikel', 'Artikel::admin_index');
+    $routes->add('artikel/add', 'Artikel::add');
+    $routes->add('artikel/edit/(:any)', 'Artikel::edit/$1');
+    $routes->get('artikel/delete/(:any)', 'Artikel::delete/$1');
+});
+```
+
+## Langkah 40
+- Menambahkan Tombol Logout di Admin Header
+- Buka `app/Views/template/admin_header.php`, tambahkan link logout di navbar:
+
+
+```php
+<!DOCTYPE html>
+<html>
+<head>
+<title><?= $title; ?></title>
+<link rel="stylesheet" href="<?= base_url('/style.css'); ?>">
+</head>
+<body>
+<div id="container">
+<header>
+    <h1>Admin Portal Berita</h1>
+</header>
+<nav>
+    <a href="<?= base_url('/admin/artikel'); ?>">Dashboard</a>
+    <a href="<?= base_url('/admin/artikel'); ?>">Artikel</a>
+    <a href="<?= base_url('/admin/artikel/add'); ?>">Tambah Artikel</a>
+    <a href="<?= base_url('/user/logout') ?>" 
+       style="float:right; background-color:#d9534f;">Logout</a>
+</nav>
+<section id="wrapper">
+<section id="main">
+```
