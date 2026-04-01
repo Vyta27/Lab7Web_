@@ -1052,7 +1052,7 @@ CREATE TABLE user (
 );
 ```
 
-SS
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/0cb99f1e-e5e7-4b3e-9a1f-92803639ea72" />
 
 ## Langkah 32
 - Membuat Model User
@@ -1245,7 +1245,7 @@ class User extends BaseController
 }
 ```
 
-SS LOGIN
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/a2b08b8b-968e-4b08-97a2-30b843d74503" />
 
 ## Langkah 36
 - Membuat Database Seeder
@@ -1283,7 +1283,7 @@ class UserSeeder extends Seeder
 php spark db:seed UserSeeder
 ```
 
-SS TABEL USER
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/06826d4d-df28-44a5-a8c0-7969f83ef48e" />
 
 ## Langkah 37
 - Membuat Auth Filter
