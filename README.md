@@ -371,11 +371,13 @@ button.btn {
 button.btn:hover {
     background-color: #2b83ea;
 }
+```
 
 ## Langkah 12
 - Membuat Template Layout
 - Buat folder : `app/Views/template`
 - header.php
+  
 
 ```
 <!DOCTYPE html>
@@ -400,6 +402,7 @@ button.btn:hover {
 ```
  
 - footer.php
+
 
 ```
 </section>
