@@ -1907,24 +1907,23 @@ form select {
 ## Hasil Praktikum
 
 ### Halaman Admin — Daftar Artikel dengan Filter Kategori
-> **Screenshot:** Halaman admin dengan kolom kategori dan dropdown filter
-
-![Admin Artikel](screenshots/admin_artikel.png)
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/fe45f235-bcad-42fb-adc9-36d686e6ee91" />
 
 ### Form Tambah Artikel dengan Dropdown Kategori
-> **Screenshot:** Form tambah artikel dengan pilihan kategori
-
-![Form Tambah](screenshots/form_tambah.png)
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/beec2351-99e8-4dfb-ab05-eb3e72ff20c8" />
 
 ### Form Edit Artikel dengan Kategori Terpilih
-> **Screenshot:** Form edit artikel dengan kategori yang sudah terisi
-
-![Form Edit](screenshots/form_edit.png)
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/25899dba-208d-4f4e-885d-f4054ac669a7" />
 
 ### Filter berdasarkan Kategori
-> **Screenshot:** Hasil filter artikel berdasarkan kategori tertentu
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/00de9789-8f89-4e5c-bab9-2d575658a2e7" />
 
-![Filter Kategori](screenshots/filter_kategori.png)
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/01308630-a020-4ab9-b12c-cba58d40c56a" />
+
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/e673f899-7d56-4877-92b1-3027f68ec05a" />
+
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/1a5eb8ec-4791-4bfb-be3d-685325594217" />
+
 
 
 
