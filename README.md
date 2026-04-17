@@ -1396,7 +1396,7 @@ $routes->group('admin', ['filter' => 'auth'], function($routes) {
 
 # Praktikum 5 - Pagination dan Pencarian
 
-## Langkah 1 — Membuat Pagination
+## Langkah 41 — Membuat Pagination
 
 Pagination digunakan untuk membatasi jumlah data yang ditampilkan per halaman. CodeIgniter 4 sudah menyediakan library pagination bawaan sehingga mudah digunakan.
 
@@ -1422,7 +1422,7 @@ Kemudian buka file `app/Views/artikel/admin_index.php` dan tambahkan kode pagina
 <?= $pager->links(); ?>
 ```
 
-## Langkah 2 — Membuat Pencarian
+## Langkah 42 — Membuat Pencarian
 
 Pencarian data digunakan untuk memfilter artikel berdasarkan kata kunci yang dimasukkan pengguna.
 
@@ -1452,7 +1452,7 @@ public function admin_index()
 
 ---
 
-## Langkah 3 — Menambahkan Form Pencarian di View
+## Langkah 43 — Menambahkan Form Pencarian di View
 
 Buka file `app/Views/artikel/admin_index.php`, tambahkan form pencarian **sebelum** deklarasi tabel, dan ubah link pager agar mempertahankan kata kunci saat berpindah halaman:
 
@@ -1503,7 +1503,7 @@ Buka file `app/Views/artikel/admin_index.php`, tambahkan form pencarian **sebelu
 <?= $this->include('template/admin_footer'); ?>
 ```
 
-## Langkah 4 — Menambahkan Data untuk Uji Pagination
+## Langkah 44 — Menambahkan Data untuk Uji Pagination
 
 Agar pagination terlihat, diperlukan lebih dari 10 data. Tambahkan data melalui phpMyAdmin:
 
@@ -1520,8 +1520,12 @@ INSERT INTO artikel (judul, isi, slug, created_at) VALUES
 ('Artikel kesebelas', 'Isi artikel kesebelas', 'artikel-kesebelas', NOW()),
 ('Artikel keduabelas', 'Isi artikel keduabelas', 'artikel-keduabelas', NOW());
 ```
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/ad4dcf86-386f-4c2c-95ba-81123b7581b4" />
 
-## Langkah 5 — Hasil Akhir
+## Langkah 45 — Hasil Akhir
 
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/243ccf6c-9440-4044-805a-c721672ab78d" />
+
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/f1e9aa37-2961-4f2c-a0f5-cb4de502834f" />
 
 
