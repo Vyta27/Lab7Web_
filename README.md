@@ -1393,3 +1393,135 @@ $routes->group('admin', ['filter' => 'auth'], function($routes) {
 <section id="wrapper">
 <section id="main">
 ```
+
+# Praktikum 5 - Pagination dan Pencarian
+
+## Langkah 1 — Membuat Pagination
+
+Pagination digunakan untuk membatasi jumlah data yang ditampilkan per halaman. CodeIgniter 4 sudah menyediakan library pagination bawaan sehingga mudah digunakan.
+
+Buka file `app/Controllers/Artikel.php`, lalu modifikasi method `admin_index()` seperti berikut:
+
+```php
+public function admin_index() 
+{
+    $title = 'Daftar Artikel';
+    $model = new ArtikelModel();
+    $data = [
+        'title'   => $title,
+        'artikel' => $model->paginate(10), // data dibatasi 10 record per halaman
+        'pager'   => $model->pager,
+    ];
+    return view('artikel/admin_index', $data);
+}
+```
+
+Kemudian buka file `app/Views/artikel/admin_index.php` dan tambahkan kode pagination di bawah tabel:
+
+```php
+<?= $pager->links(); ?>
+```
+
+## Langkah 2 — Membuat Pencarian
+
+Pencarian data digunakan untuk memfilter artikel berdasarkan kata kunci yang dimasukkan pengguna.
+
+Kembali buka `app/Controllers/Artikel.php`, ubah method `admin_index()` menjadi:
+
+```php
+public function admin_index() 
+{
+    $title = 'Daftar Artikel';
+    $q     = $this->request->getVar('q') ?? '';
+    $model = new ArtikelModel();
+    $data  = [
+        'title'   => $title,
+        'q'       => $q,
+        'artikel' => $model->like('judul', $q)->paginate(10), // data dibatasi 10 record per halaman
+        'pager'   => $model->pager,
+    ];
+    return view('artikel/admin_index', $data);
+}
+```
+
+**Penjelasan perubahan:**
+- `$q = $this->request->getVar('q') ?? ''` — mengambil nilai parameter `q` dari URL (hasil input form pencarian). Jika tidak ada, nilai default adalah string kosong.
+- `$model->like('judul', $q)` — memfilter data artikel yang judulnya mengandung kata kunci `$q`.
+- `->paginate(10)` — membatasi hasil query menjadi 10 data per halaman.
+- `$model->pager` — mengambil objek pager untuk menampilkan link navigasi halaman.
+
+---
+
+## Langkah 3 — Menambahkan Form Pencarian di View
+
+Buka file `app/Views/artikel/admin_index.php`, tambahkan form pencarian **sebelum** deklarasi tabel, dan ubah link pager agar mempertahankan kata kunci saat berpindah halaman:
+
+```php
+<?= $this->include('template/admin_header'); ?>
+
+<!-- Form Pencarian -->
+<form method="get" class="form-search">
+    <input type="text" name="q" value="<?= $q; ?>" placeholder="Cari data">
+    <input type="submit" value="Cari" class="btn btn-primary">
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Judul</th>
+            <th>Status</th>
+            <th>AKsi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if($artikel): foreach($artikel as $row): ?>
+        <tr>
+            <td><?= $row['id']; ?></td>
+            <td>
+                <b><?= $row['judul']; ?></b>
+                <p><small><?= substr($row['isi'], 0, 50); ?></small></p>
+            </td>
+            <td><?= $row['status']; ?></td>
+            <td>
+                <a class="btn" href="<?= base_url('/admin/artikel/edit/' . $row['id']);?>">Ubah</a>
+                <a class="btn btn-danger" onclick="return confirm('Yakin menghapus data?');"
+                   href="<?= base_url('/admin/artikel/delete/' . $row['id']);?>">Hapus</a>
+            </td>
+        </tr>
+        <?php endforeach; else: ?>
+        <tr>
+            <td colspan="4">Belum ada data.</td>
+        </tr>
+        <?php endif; ?>
+    </tbody>
+</table>
+
+<!-- Pagination dengan query pencarian -->
+<?= $pager->only(['q'])->links(); ?>
+
+<?= $this->include('template/admin_footer'); ?>
+```
+
+## Langkah 4 — Menambahkan Data untuk Uji Pagination
+
+Agar pagination terlihat, diperlukan lebih dari 10 data. Tambahkan data melalui phpMyAdmin:
+
+```sql
+INSERT INTO artikel (judul, isi, slug, created_at) VALUES
+('Artikel ketiga', 'Isi artikel ketiga', 'artikel-ketiga', NOW()),
+('Artikel keempat', 'Isi artikel keempat', 'artikel-keempat', NOW()),
+('Artikel kelima', 'Isi artikel kelima', 'artikel-kelima', NOW()),
+('Artikel keenam', 'Isi artikel keenam', 'artikel-keenam', NOW()),
+('Artikel ketujuh', 'Isi artikel ketujuh', 'artikel-ketujuh', NOW()),
+('Artikel kedelapan', 'Isi artikel kedelapan', 'artikel-kedelapan', NOW()),
+('Artikel kesembilan', 'Isi artikel kesembilan', 'artikel-kesembilan', NOW()),
+('Artikel kesepuluh', 'Isi artikel kesepuluh', 'artikel-kesepuluh', NOW()),
+('Artikel kesebelas', 'Isi artikel kesebelas', 'artikel-kesebelas', NOW()),
+('Artikel keduabelas', 'Isi artikel keduabelas', 'artikel-keduabelas', NOW());
+```
+
+## Langkah 5 — Hasil Akhir
+
+
+
