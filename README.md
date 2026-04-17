@@ -1529,3 +1529,403 @@ INSERT INTO artikel (judul, isi, slug, created_at) VALUES
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/f1e9aa37-2961-4f2c-a0f5-cb4de502834f" />
 
 
+# Praktikum 6 - Relasi Tabel dan Query Builder
+
+## Langkah 46 — Membuat Tabel Kategori
+
+Buka phpMyAdmin dan jalankan query berikut untuk membuat tabel `kategori`:
+
+```sql
+CREATE TABLE kategori (
+    id_kategori INT(11) AUTO_INCREMENT,
+    nama_kategori VARCHAR(100) NOT NULL,
+    slug_kategori VARCHAR(100),
+    PRIMARY KEY (id_kategori)
+);
+```
+
+Tambahkan kolom `id_kategori` ke tabel `artikel` sebagai foreign key:
+
+```sql
+ALTER TABLE artikel
+ADD COLUMN id_kategori INT(11),
+ADD CONSTRAINT fk_kategori_artikel
+FOREIGN KEY (id_kategori) REFERENCES kategori(id_kategori);
+```
+
+Isi tabel kategori dengan data awal:
+
+```sql
+INSERT INTO kategori (nama_kategori, slug_kategori) VALUES
+('Teknologi', 'teknologi'),
+('Pendidikan', 'pendidikan'),
+('Kesehatan', 'kesehatan'),
+('Hiburan', 'hiburan');
+```
+
+> **Screenshot:** Tabel kategori di phpMyAdmin
+
+![Tabel Kategori](screenshots/tabel_kategori.png)
+
+---
+
+## Langkah 47 — Membuat Model Kategori
+
+Buat file baru `app/Models/KategoriModel.php`:
+
+```php
+<?php
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class KategoriModel extends Model
+{
+    protected $table         = 'kategori';
+    protected $primaryKey    = 'id_kategori';
+    protected $useAutoIncrement = true;
+    protected $allowedFields = ['nama_kategori', 'slug_kategori'];
+}
+```
+
+---
+
+## Langkah 48 — Modifikasi ArtikelModel
+
+Buka `app/Models/ArtikelModel.php` dan tambahkan method `getArtikelDenganKategori()` serta tambahkan `id_kategori` ke `$allowedFields`:
+
+```php
+<?php
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class ArtikelModel extends Model
+{
+    protected $table            = 'artikel';
+    protected $primaryKey       = 'id';
+    protected $useAutoIncrement = true;
+    protected $allowedFields    = ['judul', 'isi', 'status', 'slug', 'gambar', 'id_kategori'];
+    protected $useTimestamps    = true;
+    protected $createdField     = 'created_at';
+    protected $updatedField     = '';
+
+    public function getArtikelDenganKategori()
+    {
+        return $this->db->table('artikel')
+            ->select('artikel.*, kategori.nama_kategori')
+            ->join('kategori', 'kategori.id_kategori = artikel.id_kategori', 'left')
+            ->get()
+            ->getResultArray();
+    }
+}
+```
+
+---
+
+## Langkah 49 — Modifikasi Controller Artikel
+
+Buka `app/Controllers/Artikel.php` dan modifikasi untuk menggunakan `KategoriModel` serta menambahkan fitur filter kategori:
+
+```php
+<?php
+namespace App\Controllers;
+
+use App\Models\ArtikelModel;
+use App\Models\KategoriModel;
+
+class Artikel extends BaseController
+{
+    public function index()
+    {
+        $title   = 'Daftar Artikel';
+        $model   = new ArtikelModel();
+        $artikel = $model->getArtikelDenganKategori();
+        return view('artikel/index', compact('artikel', 'title'));
+    }
+
+    public function admin_index()
+    {
+        $title       = 'Daftar Artikel';
+        $model       = new ArtikelModel();
+        $q           = $this->request->getVar('q') ?? '';
+        $kategori_id = $this->request->getVar('kategori_id') ?? '';
+
+        $builder = $model->db->table('artikel')
+            ->select('artikel.*, kategori.nama_kategori')
+            ->join('kategori', 'kategori.id_kategori = artikel.id_kategori', 'left');
+
+        if ($q != '') {
+            $builder->like('artikel.judul', $q);
+        }
+        if ($kategori_id != '') {
+            $builder->where('artikel.id_kategori', $kategori_id);
+        }
+
+        $data['artikel']     = $builder->get()->getResultArray();
+        $data['title']       = $title;
+        $data['q']           = $q;
+        $data['kategori_id'] = $kategori_id;
+        $data['pager']       = null;
+
+        $kategoriModel    = new KategoriModel();
+        $data['kategori'] = $kategoriModel->findAll();
+
+        return view('artikel/admin_index', $data);
+    }
+
+    public function add()
+    {
+        $kategoriModel    = new KategoriModel();
+        $data['kategori'] = $kategoriModel->findAll();
+        $data['title']    = 'Tambah Artikel';
+
+        if ($this->request->getMethod() == 'post') {
+            $model = new ArtikelModel();
+            $model->insert([
+                'judul'       => $this->request->getPost('judul'),
+                'isi'         => $this->request->getPost('isi'),
+                'slug'        => url_title($this->request->getPost('judul'), '-', true),
+                'id_kategori' => $this->request->getPost('id_kategori'),
+                'status'      => 0,
+            ]);
+            return redirect()->to('/admin/artikel');
+        }
+
+        return view('artikel/form_add', $data);
+    }
+
+    public function edit($id)
+    {
+        $model            = new ArtikelModel();
+        $kategoriModel    = new KategoriModel();
+        $data['artikel']  = $model->find($id);
+        $data['kategori'] = $kategoriModel->findAll();
+        $data['title']    = 'Edit Artikel';
+
+        if ($this->request->getMethod() == 'post') {
+            $model->update($id, [
+                'judul'       => $this->request->getPost('judul'),
+                'isi'         => $this->request->getPost('isi'),
+                'slug'        => url_title($this->request->getPost('judul'), '-', true),
+                'id_kategori' => $this->request->getPost('id_kategori'),
+            ]);
+            return redirect()->to('/admin/artikel');
+        }
+
+        return view('artikel/form_edit', $data);
+    }
+
+    public function delete($id)
+    {
+        $model = new ArtikelModel();
+        $model->delete($id);
+        return redirect()->to('/admin/artikel');
+    }
+}
+```
+
+## Langkah 50 — Modifikasi View
+
+#### `app/Views/artikel/index.php`
+Tambahkan tampilan nama kategori pada halaman publik:
+
+```php
+<?= $this->extend('layout/main') ?>
+<?= $this->section('content') ?>
+
+<h2><?= $title; ?></h2>
+
+<?php if ($artikel): foreach ($artikel as $row): ?>
+<article class="entry">
+    <h2>
+        <a href="<?= base_url('/artikel/' . $row['slug']); ?>">
+            <?= $row['judul']; ?>
+        </a>
+    </h2>
+    <p><small>Kategori: <b><?= $row['nama_kategori'] ?? 'Uncategorized'; ?></b></small></p>
+    <?php if ($row['gambar']): ?>
+    <img src="<?= base_url('/gambar/' . $row['gambar']); ?>" alt="<?= $row['judul']; ?>">
+    <?php endif; ?>
+    <p><?= substr($row['isi'], 0, 200); ?>...</p>
+</article>
+<hr class="divider" />
+<?php endforeach; else: ?>
+<article class="entry">
+    <h2>Belum ada data.</h2>
+</article>
+<?php endif; ?>
+
+<?= $this->endSection() ?>
+```
+
+#### `app/Views/artikel/admin_index.php`
+Tambahkan dropdown filter kategori:
+
+```php
+<?= $this->include('template/admin_header'); ?>
+
+<form method="get" class="form-search">
+    <input type="text" name="q" value="<?= $q; ?>" placeholder="Cari judul artikel">
+    <select name="kategori_id">
+        <option value="">Semua Kategori</option>
+        <?php foreach ($kategori as $k): ?>
+        <option value="<?= $k['id_kategori']; ?>"
+            <?= ($kategori_id == $k['id_kategori']) ? 'selected' : ''; ?>>
+            <?= $k['nama_kategori']; ?>
+        </option>
+        <?php endforeach; ?>
+    </select>
+    <input type="submit" value="Cari" class="btn btn-primary">
+</form>
+
+<table class="table">
+<thead>
+<tr>
+    <th>ID</th><th>Judul</th><th>Kategori</th><th>Status</th><th>Aksi</th>
+</tr>
+</thead>
+<tbody>
+<?php if (count($artikel) > 0): foreach ($artikel as $row): ?>
+<tr>
+    <td><?= $row['id']; ?></td>
+    <td>
+        <b><?= $row['judul']; ?></b>
+        <p><small><?= substr($row['isi'], 0, 50); ?></small></p>
+    </td>
+    <td><?= $row['nama_kategori'] ?? '-'; ?></td>
+    <td><?= $row['status']; ?></td>
+    <td>
+        <a class="btn" href="<?= base_url('/admin/artikel/edit/' . $row['id']); ?>">Ubah</a>
+        <a class="btn btn-danger" onclick="return confirm('Yakin menghapus data?');"
+           href="<?= base_url('/admin/artikel/delete/' . $row['id']); ?>">Hapus</a>
+    </td>
+</tr>
+<?php endforeach; else: ?>
+<tr><td colspan="5">Tidak ada data.</td></tr>
+<?php endif; ?>
+</tbody>
+</table>
+
+<?= $this->include('template/admin_footer'); ?>
+```
+
+#### `app/Views/artikel/form_add.php`
+Tambahkan dropdown pilih kategori:
+
+```php
+<?= $this->include('template/admin_header'); ?>
+<h2><?= $title; ?></h2>
+<form action="" method="post">
+    <p>
+        <label for="judul">Judul</label>
+        <input type="text" name="judul" id="judul" required>
+    </p>
+    <p>
+        <label for="isi">Isi Artikel</label>
+        <textarea name="isi" id="isi" cols="50" rows="10"></textarea>
+    </p>
+    <p>
+        <label for="id_kategori">Kategori</label>
+        <select name="id_kategori" id="id_kategori" required>
+            <option value="">-- Pilih Kategori --</option>
+            <?php foreach ($kategori as $k): ?>
+            <option value="<?= $k['id_kategori']; ?>"><?= $k['nama_kategori']; ?></option>
+            <?php endforeach; ?>
+        </select>
+    </p>
+    <p><input type="submit" value="Simpan" class="btn"></p>
+</form>
+<?= $this->include('template/admin_footer'); ?>
+```
+
+#### `app/Views/artikel/form_edit.php`
+Tambahkan dropdown kategori dengan nilai yang sudah dipilih sebelumnya:
+
+```php
+<?= $this->include('template/admin_header'); ?>
+<h2><?= $title; ?></h2>
+<form action="" method="post">
+    <p>
+        <label for="judul">Judul</label>
+        <input type="text" name="judul" id="judul"
+               value="<?= $artikel['judul']; ?>" required>
+    </p>
+    <p>
+        <label for="isi">Isi Artikel</label>
+        <textarea name="isi" id="isi" cols="50" rows="10"><?= $artikel['isi']; ?></textarea>
+    </p>
+    <p>
+        <label for="id_kategori">Kategori</label>
+        <select name="id_kategori" id="id_kategori" required>
+            <option value="">-- Pilih Kategori --</option>
+            <?php foreach ($kategori as $k): ?>
+            <option value="<?= $k['id_kategori']; ?>"
+                <?= ($artikel['id_kategori'] == $k['id_kategori']) ? 'selected' : ''; ?>>
+                <?= $k['nama_kategori']; ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
+    </p>
+    <p><input type="submit" value="Simpan" class="btn"></p>
+</form>
+<?= $this->include('template/admin_footer'); ?>
+```
+
+
+## Langkah 51 — Tambah CSS Dropdown Kategori
+
+Tambahkan di bagian bawah `public/style.css`:
+
+```css
+/* Dropdown Kategori di Form Pencarian */
+.form-search select {
+    width: auto;
+    min-width: 150px;
+    padding: 9px 12px;
+    border: 1.5px solid var(--pink-100);
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    color: #3d2535;
+    background: white;
+    cursor: pointer;
+}
+
+/* Dropdown Kategori di Form Tambah/Edit */
+form select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--pink-100);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    color: #3d2535;
+    background: white;
+    margin-bottom: 12px;
+}
+```
+
+## Hasil Praktikum
+
+### Halaman Admin — Daftar Artikel dengan Filter Kategori
+> **Screenshot:** Halaman admin dengan kolom kategori dan dropdown filter
+
+![Admin Artikel](screenshots/admin_artikel.png)
+
+### Form Tambah Artikel dengan Dropdown Kategori
+> **Screenshot:** Form tambah artikel dengan pilihan kategori
+
+![Form Tambah](screenshots/form_tambah.png)
+
+### Form Edit Artikel dengan Kategori Terpilih
+> **Screenshot:** Form edit artikel dengan kategori yang sudah terisi
+
+![Form Edit](screenshots/form_edit.png)
+
+### Filter berdasarkan Kategori
+> **Screenshot:** Hasil filter artikel berdasarkan kategori tertentu
+
+![Filter Kategori](screenshots/filter_kategori.png)
+
+
+
+
