@@ -1967,7 +1967,7 @@ public function add()
 }
 ```
 
-> **Screenshot:** Halaman tambah artikel setelah ditambahkan field upload gambar
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/4df71f82-6a53-47e1-b872-ec3fa31c77c8" />
 
 ## Langkah 2 — Modifikasi Method `edit()` di Controller
 
@@ -2013,8 +2013,7 @@ public function edit($id)
     return view('artikel/form_edit', $data);
 }
 ```
-
-> **Screenshot:** Halaman edit artikel dengan preview gambar lama
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/d7bcc37e-27cb-4087-a61a-5cd498f1ac7d" />
 
 ## Langkah 3 — Modifikasi View `form_add.php`
 
@@ -2094,12 +2093,7 @@ Buka `app/Views/artikel/form_edit.php`, tambahkan `enctype`, input file, dan pre
 <?= $this->include('template/admin_footer'); ?>
 ```
 
-
-> **Screenshot:** Halaman edit artikel dengan preview gambar yang sudah ada
-
-![Preview Gambar Edit](screenshots/preview_gambar_edit.png)
-
----
+<img width="1902" height="999" alt="Image" src="https://github.com/user-attachments/assets/4a25b4db-e3b8-409f-a164-d9f058fc4b50" />
 
 ### Langkah 5 — Pastikan Folder `public/gambar/` Ada
 
@@ -2109,11 +2103,8 @@ Pastikan folder `public/gambar/` sudah tersedia di dalam project. Jika belum, bu
 mkdir public/gambar
 ```
 
-> **Screenshot:** Folder `public/gambar/` berisi file gambar yang berhasil diupload
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/a9f59cc5-885d-4a4b-9f9d-2d95dd491da7" />
 
-![Folder Gambar](screenshots/folder_gambar.png)
-
----
 
 ### Langkah 6 — Tampilkan Gambar di View Artikel
 
@@ -2132,16 +2123,7 @@ Buka `app/Views/artikel/index.php` dan `detail.php`, pastikan tag `<img>` sudah 
 
 ## Hasil Akhir
 
-> **Screenshot:** Halaman admin daftar artikel
-
-![Dashboard Admin](screenshots/dashboard_admin.png)
-
-> **Screenshot:** Halaman publik artikel dengan gambar tampil
-
-![Halaman Publik](screenshots/halaman_publik.png)
-
----
-
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/d98d05f4-2987-4508-9234-2373907938a8" />
 
 
 
