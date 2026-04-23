@@ -2093,7 +2093,7 @@ Buka `app/Views/artikel/form_edit.php`, tambahkan `enctype`, input file, dan pre
 <?= $this->include('template/admin_footer'); ?>
 ```
 
-<img width="1902" height="999" alt="Image" src="https://github.com/user-attachments/assets/4a25b4db-e3b8-409f-a164-d9f058fc4b50" />
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/a9f59cc5-885d-4a4b-9f9d-2d95dd491da7" />
 
 ### Langkah 5 — Pastikan Folder `public/gambar/` Ada
 
@@ -2103,7 +2103,7 @@ Pastikan folder `public/gambar/` sudah tersedia di dalam project. Jika belum, bu
 mkdir public/gambar
 ```
 
-<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/a9f59cc5-885d-4a4b-9f9d-2d95dd491da7" />
+<img width="1902" height="999" alt="Image" src="https://github.com/user-attachments/assets/4a25b4db-e3b8-409f-a164-d9f058fc4b50" />
 
 
 ### Langkah 6 — Tampilkan Gambar di View Artikel
