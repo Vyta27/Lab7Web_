@@ -437,7 +437,7 @@ button.btn:hover {
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/fd03cc5e-0744-4f7c-891e-654737b9a1b6" />
 
 # Praktikum 2 
-## Langkah 13
+## Langkah 1
 - Membuat Database
 ```
 CREATE DATABASE lab_ci4;
@@ -455,7 +455,7 @@ PRIMARY KEY(id)
 );
 ```
 
-## Langkah 14
+## Langkah 2
 - Konfigurasi Routing
 - `app/Config/Routes.php`
 
@@ -486,7 +486,7 @@ $routes->group('admin', function($routes) {
 });
 ```
 
-## Langkah 15
+## Langkah 3
 - Membuat Model Artikel
 - `app/Models/ArtikelModel.php`
 
@@ -511,7 +511,7 @@ class ArtikelModel extends Model
 }}
 ```
 
-## Langkah 16
+## Langkah 4
 - Membuat Controller Artikel
 - `app/Controllers/Artikel.php`
 
@@ -560,7 +560,7 @@ class Artikel extends BaseController
 }
 ```
 
-## Langkah 17
+## Langkah 5
 - Membuat View Daftar Artikel
 - `app/Views/artikel/index.php`
 
@@ -608,7 +608,7 @@ mencapai lebih dari 2000 tahun.', 'artikel-kedua');
 
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/02f9b6f7-18f9-4a7b-8f87-e93244d9702b" />
 
-## Langkah 18
+## Langkah 6
 - Membuat Tampilan Detail Artikel
 - Tambahkan fungsi baru pada Controller Artikel dengan nama view().
 
@@ -629,7 +629,7 @@ return view('artikel/detail', compact('artikel', 'title'));
 }
 ```
 
-## Langkah 19
+## Langkah 7
 - Membuat View Detail
 - Buat view baru untuk halaman detail dengan nama app/views/artikel/detail.php.
 
@@ -644,7 +644,7 @@ $artikel['judul']; ?>">
 <?= $this->include('template/footer'); ?>
 ```
 
-## Langkah 20
+## Langkah 8
 - Buka Kembali file app/config/Routes.php, kemudian tambahkan routing untuk artikel detail.
 
 ```
@@ -653,7 +653,7 @@ $routes->get('/artikel/(:any)', 'Artikel::view/$1');
 
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/fe37313f-7a8c-44fb-ac35-5dd20d242635" />
 
-## Langkah 21
+## Langkah 9
 - Membuat Halaman Admin Artikel
 - `app/Views/artikel/admin_index.php`
 
@@ -721,7 +721,7 @@ Hapus
 
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/779af90c-0876-46cd-859f-ac871cb60336" />
 
-## Langkah 22
+## Langkah 10
 - Membuat Form Tambah Artikel
 - `app/Views/artikel/form_add.php`
 
@@ -751,7 +751,7 @@ Hapus
 
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/8f801d18-1f1a-47ca-958a-30c84ef5363e" />
 
-## Langkah 23
+## Langkah 11
 - Membuat Form Edit Artikel
 - `app/Views/artikel/form_edit.php`
 
@@ -782,7 +782,7 @@ Hapus
 ```
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/99cbd4dd-7b31-4502-be93-81b4ab46cd9a" />
 
-## Langkah 24
+## Langkah 12
 - Membuat Fungsi Hapus Artikel
 
 ```
@@ -796,7 +796,7 @@ public function delete($id)
 ```
 
 # Praktikum 3
-## Langkah 25
+## Langkah 1
 - Menambahkan Kolom `created_at` pada Tabel Artikel
 
 ```sql
@@ -806,7 +806,7 @@ ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP;
 UPDATE artikel SET created_at = NOW() WHERE created_at IS NULL;
 ```
 
-## Langkah 26
+## Langkah 2
 - Update ArtikelModel.php
 - Tambahkan field `created_at` dan aktifkan timestamps pada file `app/Models/ArtikelModel.php`:
 
@@ -828,7 +828,7 @@ class ArtikelModel extends Model
 }
 ```
 
-## Langkah 26
+## Langkah 3
 - Membuat Layout Utama
 - Buat folder `layout` di dalam `app/Views/`, kemudian buat file `main.php`:
 
@@ -879,7 +879,7 @@ class ArtikelModel extends Model
 </html>
 ```
 
-## Langkah 27
+## Langkah 4
 - Membuat View Cell ArtikelTerkini
 - Buat folder `Cells` di dalam `app/`, kemudian buat file `ArtikelTerkini.php`:
 
@@ -901,7 +901,7 @@ class ArtikelTerkini
 }
 ```
 
-## Langkah 28
+## Langkah 5
 - Membuat View untuk View Cell
 - Buat folder `components` di dalam `app/Views/`, kemudian buat file `artikel_terkini.php`:
 
@@ -924,7 +924,7 @@ class ArtikelTerkini
 </div>
 ```
 
-## Langkah 29
+## Langkah 6
 - Modifikasi View Home
 
 ```php
@@ -959,7 +959,7 @@ class Home extends BaseController
 
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/02706568-a542-4cd6-9c26-6cd8fcc969d6" />
 
-## Langkah 30
+## Langkah 7
 - Modifikasi View Artikel
 - Ubah file `app/Views/artikel/index.php`:
 
@@ -1038,7 +1038,7 @@ app/
 
 # Praktikum 4
 
-## Langkah 31
+## Langkah 1
 - Membuat Tabel User di Database
 - Buka phpMyAdmin, pilih database `lab_ci4`, jalankan query berikut:
 
@@ -1054,7 +1054,7 @@ CREATE TABLE user (
 
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/0cb99f1e-e5e7-4b3e-9a1f-92803639ea72" />
 
-## Langkah 32
+## Langkah 2
 - Membuat Model User
 - Buat file baru `app/Models/UserModel.php`:
 
@@ -1073,7 +1073,7 @@ class UserModel extends Model
 }
 ```
 
-## Langkah 33
+## Langkah 3
 - Membuat Controller User
 - Buat file baru `app/Controllers/User.php` dengan method `index()`, `login()`, dan `logout()`:
 
@@ -1136,7 +1136,7 @@ class User extends BaseController
 }
 ```
 
-## Langkah 34
+## Langkah 4
 
 - Membuat View Login
 - Buat folder `user` di `app/Views/`, kemudian buat file `login.php`:
@@ -1177,7 +1177,7 @@ class User extends BaseController
 </html>
 ```
 
-## Langkah 35
+## Langkah 5
 - Menambahkan CSS untuk Halaman Login
 - Tambahkan kode berikut di bagian paling bawah `public/style.css`:
 
@@ -1247,7 +1247,7 @@ class User extends BaseController
 
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/a2b08b8b-968e-4b08-97a2-30b843d74503" />
 
-## Langkah 36
+## Langkah 6
 - Membuat Database Seeder
 - Buka terminal/CMD di folder project, jalankan perintah:
 
@@ -1285,7 +1285,7 @@ php spark db:seed UserSeeder
 
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/06826d4d-df28-44a5-a8c0-7969f83ef48e" />
 
-## Langkah 37
+## Langkah 7
 - Membuat Auth Filter
 - Buat folder `Filters` di `app/`, kemudian buat file `Auth.php`:
 
@@ -1315,7 +1315,7 @@ class Auth implements FilterInterface
 }
 ```
 
-## Langkah 38
+## Langkah 8
 - Mendaftarkan Filter di Config
 - Buka `app/Config/Filters.php`, tambahkan `auth` di bagian `$aliases`:
 
@@ -1334,7 +1334,7 @@ public array $aliases = [
 ];
 ```
 
-## Langkah 39 
+## Langkah 9 
 - Update Routes
 - Buka `app/Config/Routes.php`, tambahkan route login/logout dan filter auth pada group admin:
 
@@ -1366,7 +1366,7 @@ $routes->group('admin', ['filter' => 'auth'], function($routes) {
 });
 ```
 
-## Langkah 40
+## Langkah 10
 - Menambahkan Tombol Logout di Admin Header
 - Buka `app/Views/template/admin_header.php`, tambahkan link logout di navbar:
 
@@ -1396,7 +1396,7 @@ $routes->group('admin', ['filter' => 'auth'], function($routes) {
 
 # Praktikum 5 - Pagination dan Pencarian
 
-## Langkah 41 — Membuat Pagination
+## Langkah 1 — Membuat Pagination
 
 Pagination digunakan untuk membatasi jumlah data yang ditampilkan per halaman. CodeIgniter 4 sudah menyediakan library pagination bawaan sehingga mudah digunakan.
 
@@ -1422,7 +1422,7 @@ Kemudian buka file `app/Views/artikel/admin_index.php` dan tambahkan kode pagina
 <?= $pager->links(); ?>
 ```
 
-## Langkah 42 — Membuat Pencarian
+## Langkah 2 — Membuat Pencarian
 
 Pencarian data digunakan untuk memfilter artikel berdasarkan kata kunci yang dimasukkan pengguna.
 
@@ -1452,7 +1452,7 @@ public function admin_index()
 
 ---
 
-## Langkah 43 — Menambahkan Form Pencarian di View
+## Langkah 3 — Menambahkan Form Pencarian di View
 
 Buka file `app/Views/artikel/admin_index.php`, tambahkan form pencarian **sebelum** deklarasi tabel, dan ubah link pager agar mempertahankan kata kunci saat berpindah halaman:
 
@@ -1503,7 +1503,7 @@ Buka file `app/Views/artikel/admin_index.php`, tambahkan form pencarian **sebelu
 <?= $this->include('template/admin_footer'); ?>
 ```
 
-## Langkah 44 — Menambahkan Data untuk Uji Pagination
+## Langkah 4 — Menambahkan Data untuk Uji Pagination
 
 Agar pagination terlihat, diperlukan lebih dari 10 data. Tambahkan data melalui phpMyAdmin:
 
@@ -1522,7 +1522,7 @@ INSERT INTO artikel (judul, isi, slug, created_at) VALUES
 ```
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/ad4dcf86-386f-4c2c-95ba-81123b7581b4" />
 
-## Langkah 45 — Hasil Akhir
+## Langkah 5 — Hasil Akhir
 
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/243ccf6c-9440-4044-805a-c721672ab78d" />
 
@@ -1531,7 +1531,7 @@ INSERT INTO artikel (judul, isi, slug, created_at) VALUES
 
 # Praktikum 6 - Relasi Tabel dan Query Builder
 
-## Langkah 46 — Membuat Tabel Kategori
+## Langkah 1 — Membuat Tabel Kategori
 
 Buka phpMyAdmin dan jalankan query berikut untuk membuat tabel `kategori`:
 
@@ -1569,7 +1569,7 @@ INSERT INTO kategori (nama_kategori, slug_kategori) VALUES
 
 ---
 
-## Langkah 47 — Membuat Model Kategori
+## Langkah 2 — Membuat Model Kategori
 
 Buat file baru `app/Models/KategoriModel.php`:
 
@@ -1590,7 +1590,7 @@ class KategoriModel extends Model
 
 ---
 
-## Langkah 48 — Modifikasi ArtikelModel
+## Langkah 3 — Modifikasi ArtikelModel
 
 Buka `app/Models/ArtikelModel.php` dan tambahkan method `getArtikelDenganKategori()` serta tambahkan `id_kategori` ke `$allowedFields`:
 
@@ -1623,7 +1623,7 @@ class ArtikelModel extends Model
 
 ---
 
-## Langkah 49 — Modifikasi Controller Artikel
+## Langkah 4 — Modifikasi Controller Artikel
 
 Buka `app/Controllers/Artikel.php` dan modifikasi untuk menggunakan `KategoriModel` serta menambahkan fitur filter kategori:
 
@@ -1725,7 +1725,7 @@ class Artikel extends BaseController
 }
 ```
 
-## Langkah 50 — Modifikasi View
+## Langkah 5 — Modifikasi View
 
 #### `app/Views/artikel/index.php`
 Tambahkan tampilan nama kategori pada halaman publik:
@@ -1873,7 +1873,7 @@ Tambahkan dropdown kategori dengan nilai yang sudah dipilih sebelumnya:
 ```
 
 
-## Langkah 51 — Tambah CSS Dropdown Kategori
+## Langkah 6 — Tambah CSS Dropdown Kategori
 
 Tambahkan di bagian bawah `public/style.css`:
 
@@ -1923,6 +1923,224 @@ form select {
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/e673f899-7d56-4877-92b1-3027f68ec05a" />
 
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/1a5eb8ec-4791-4bfb-be3d-685325594217" />
+
+
+# Praktikum 7 - Upload File Gambar
+
+## Langkah 1 — Modifikasi Method `add()` di Controller
+
+Buka file `app/Controllers/Artikel.php`, lalu modifikasi method `add()` agar mendukung upload file gambar.
+
+```php
+public function add()
+{
+    $validation = \Config\Services::validation();
+    $validation->setRules(['judul' => 'required']);
+    $isDataValid = $validation->withRequest($this->request)->run();
+
+    if ($isDataValid) {
+        $file = $this->request->getFile('gambar');
+
+        if ($file->isValid() && !$file->hasMoved()) {
+            $file->move(ROOTPATH . 'public/gambar');
+            $nama_file = $file->getName();
+        } else {
+            $nama_file = null;
+        }
+
+        $model = new ArtikelModel();
+        $model->insert([
+            'judul'       => $this->request->getPost('judul'),
+            'isi'         => $this->request->getPost('isi'),
+            'slug'        => url_title($this->request->getPost('judul'), '-', true),
+            'id_kategori' => $this->request->getPost('id_kategori'),
+            'gambar'      => $nama_file,
+        ]);
+
+        return redirect()->to('/admin/artikel');
+    }
+
+    $kategoriModel    = new KategoriModel();
+    $data['kategori'] = $kategoriModel->findAll();
+    $data['title']    = "Tambah Artikel";
+    return view('artikel/form_add', $data);
+}
+```
+
+> **Screenshot:** Halaman tambah artikel setelah ditambahkan field upload gambar
+
+## Langkah 2 — Modifikasi Method `edit()` di Controller
+
+Tambahkan logika upload gambar pada method `edit()`, dengan tetap mempertahankan gambar lama jika tidak ada gambar baru yang diupload.
+
+```php
+public function edit($id)
+{
+    $model            = new ArtikelModel();
+    $kategoriModel    = new KategoriModel();
+    $data['artikel']  = $model->find($id);
+    $data['kategori'] = $kategoriModel->findAll();
+    $data['title']    = 'Edit Artikel';
+
+    if (!$data['artikel']) {
+        throw new \CodeIgniter\Exceptions\PageNotFoundException('Artikel tidak ditemukan');
+    }
+
+    $validation = \Config\Services::validation();
+    $validation->setRules(['judul' => 'required']);
+    $isDataValid = $validation->withRequest($this->request)->run();
+
+    if ($isDataValid) {
+        $file       = $this->request->getFile('gambar');
+        $namaGambar = $data['artikel']['gambar']; // gunakan gambar lama sebagai default
+
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            $file->move(ROOTPATH . 'public/gambar');
+            $namaGambar = $file->getName();
+        }
+
+        $model->update($id, [
+            'judul'       => $this->request->getPost('judul'),
+            'isi'         => $this->request->getPost('isi'),
+            'slug'        => url_title($this->request->getPost('judul'), '-', true),
+            'id_kategori' => $this->request->getPost('id_kategori'),
+            'gambar'      => $namaGambar,
+        ]);
+
+        return redirect()->to('/admin/artikel');
+    }
+
+    return view('artikel/form_edit', $data);
+}
+```
+
+> **Screenshot:** Halaman edit artikel dengan preview gambar lama
+
+## Langkah 3 — Modifikasi View `form_add.php`
+
+Buka `app/Views/artikel/form_add.php`, tambahkan `enctype="multipart/form-data"` pada tag form dan tambahkan input file gambar.
+
+```php
+<?= $this->include('template/admin_header'); ?>
+<h2><?= $title; ?></h2>
+
+<form action="" method="post" enctype="multipart/form-data">
+    <p>
+        <label for="judul">Judul</label>
+        <input type="text" name="judul" id="judul" required>
+    </p>
+    <p>
+        <label for="isi">Isi</label>
+        <textarea name="isi" id="isi" cols="50" rows="10"></textarea>
+    </p>
+    <p>
+        <label for="id_kategori">Kategori</label>
+        <select name="id_kategori" id="id_kategori" required>
+            <?php foreach ($kategori as $k): ?>
+            <option value="<?= $k['id_kategori']; ?>"><?= $k['nama_kategori']; ?></option>
+            <?php endforeach; ?>
+        </select>
+    </p>
+    <p>
+        <label for="gambar">Gambar</label>
+        <input type="file" name="gambar" id="gambar" accept="image/*">
+    </p>
+    <p><input type="submit" value="Kirim" class="btn"></p>
+</form>
+
+<?= $this->include('template/admin_footer'); ?>
+```
+
+### Langkah 4 — Modifikasi View `form_edit.php`
+
+Buka `app/Views/artikel/form_edit.php`, tambahkan `enctype`, input file, dan preview gambar lama.
+
+```php
+<?= $this->include('template/admin_header'); ?>
+<h2><?= $title; ?></h2>
+
+<form action="" method="post" enctype="multipart/form-data">
+    <p>
+        <label for="judul">Judul</label>
+        <input type="text" name="judul" value="<?= $artikel['judul']; ?>" id="judul" required>
+    </p>
+    <p>
+        <label for="isi">Isi</label>
+        <textarea name="isi" id="isi" cols="50" rows="10"><?= $artikel['isi']; ?></textarea>
+    </p>
+    <p>
+        <label for="id_kategori">Kategori</label>
+        <select name="id_kategori" id="id_kategori" required>
+            <?php foreach ($kategori as $k): ?>
+            <option value="<?= $k['id_kategori']; ?>"
+                <?= ($artikel['id_kategori'] == $k['id_kategori']) ? 'selected' : ''; ?>>
+                <?= $k['nama_kategori']; ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
+    </p>
+    <p>
+        <label for="gambar">Gambar</label><br>
+        <?php if (!empty($artikel['gambar'])): ?>
+            <img src="<?= base_url('/gambar/' . $artikel['gambar']); ?>"
+                 style="max-width:150px; margin-bottom:8px; display:block; border-radius:6px;">
+            <small>Biarkan kosong jika tidak ingin mengganti gambar</small>
+        <?php endif; ?>
+        <input type="file" name="gambar" id="gambar" accept="image/*">
+    </p>
+    <p><input type="submit" value="Kirim" class="btn"></p>
+</form>
+
+<?= $this->include('template/admin_footer'); ?>
+```
+
+
+> **Screenshot:** Halaman edit artikel dengan preview gambar yang sudah ada
+
+![Preview Gambar Edit](screenshots/preview_gambar_edit.png)
+
+---
+
+### Langkah 5 — Pastikan Folder `public/gambar/` Ada
+
+Pastikan folder `public/gambar/` sudah tersedia di dalam project. Jika belum, buat secara manual melalui File Explorer atau terminal:
+
+```bash
+mkdir public/gambar
+```
+
+> **Screenshot:** Folder `public/gambar/` berisi file gambar yang berhasil diupload
+
+![Folder Gambar](screenshots/folder_gambar.png)
+
+---
+
+### Langkah 6 — Tampilkan Gambar di View Artikel
+
+Buka `app/Views/artikel/index.php` dan `detail.php`, pastikan tag `<img>` sudah menggunakan `base_url()` yang benar.
+
+**index.php:**
+```php
+<img src="<?= base_url('/gambar/' . $row['gambar']); ?>" alt="<?= $row['judul']; ?>">
+```
+
+**detail.php:**
+```php
+<img src="<?= base_url('/gambar/' . $artikel['gambar']); ?>" alt="<?= $artikel['judul']; ?>">
+```
+
+
+## Hasil Akhir
+
+> **Screenshot:** Halaman admin daftar artikel
+
+![Dashboard Admin](screenshots/dashboard_admin.png)
+
+> **Screenshot:** Halaman publik artikel dengan gambar tampil
+
+![Halaman Publik](screenshots/halaman_publik.png)
+
+---
 
 
 
