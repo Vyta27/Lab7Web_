@@ -2125,6 +2125,312 @@ Buka `app/Views/artikel/index.php` dan `detail.php`, pastikan tag `<img>` sudah 
 
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/d98d05f4-2987-4508-9234-2373907938a8" />
 
+# Praktikum 8 - AJAX
+
+## Langkah 1 — Menambahkan Library jQuery
+
+jQuery digunakan untuk mempermudah penulisan kode AJAX.
+
+1. Download jQuery dari [https://jquery.com](https://jquery.com)
+2. Buat folder `public/assets/js/`
+3. Simpan file dengan nama `jquery-3.6.0.min.js` di folder tersebut
+
+Struktur folder:
+```
+public/
+└── assets/
+    └── js/
+        └── jquery-3.6.0.min.js
+```
+
+> **Screenshot:**
+> ![Download jQuery](screenshots/p8_jquery_folder.png)
+
+---
+
+## Langkah 2 — Membuat AjaxController
+
+Buat file baru `app/Controllers/AjaxController.php`:
+
+```php
+<?php
+namespace App\Controllers;
+
+use CodeIgniter\Controller;
+use App\Models\ArtikelModel;
+
+class AjaxController extends Controller
+{
+    public function index()
+    {
+        return view('ajax/index');
+    }
+
+    public function getData()
+    {
+        $model = new ArtikelModel();
+        $data  = $model->findAll();
+        return $this->response->setJSON($data);
+    }
+
+    public function delete($id)
+    {
+        $model = new ArtikelModel();
+        $model->delete($id);
+        $data = ['status' => 'OK'];
+        return $this->response->setJSON($data);
+    }
+
+    public function add()
+    {
+        $model = new ArtikelModel();
+        $model->insert([
+            'judul'       => $this->request->getPost('judul'),
+            'isi'         => $this->request->getPost('isi'),
+            'slug'        => url_title($this->request->getPost('judul'), '-', true),
+            'id_kategori' => $this->request->getPost('id_kategori'),
+            'status'      => 0,
+        ]);
+        return $this->response->setJSON(['status' => 'OK']);
+    }
+
+    public function update($id)
+    {
+        $model = new ArtikelModel();
+        $model->update($id, [
+            'judul'       => $this->request->getPost('judul'),
+            'isi'         => $this->request->getPost('isi'),
+            'slug'        => url_title($this->request->getPost('judul'), '-', true),
+            'id_kategori' => $this->request->getPost('id_kategori'),
+        ]);
+        return $this->response->setJSON(['status' => 'OK']);
+    }
+
+    public function getById($id)
+    {
+        $model = new ArtikelModel();
+        $data  = $model->find($id);
+        return $this->response->setJSON($data);
+    }
+}
+```
+
+### Langkah 3 — Menambahkan Route
+
+Buka `app/Config/Routes.php` dan tambahkan route AJAX:
+
+```php
+// Route AJAX
+$routes->get('/ajax', 'AjaxController::index');
+$routes->get('/ajax/getData', 'AjaxController::getData');
+$routes->get('/ajax/getById/(:num)', 'AjaxController::getById/$1');
+$routes->post('/ajax/add', 'AjaxController::add');
+$routes->post('/ajax/update/(:num)', 'AjaxController::update/$1');
+$routes->delete('/ajax/delete/(:num)', 'AjaxController::delete/$1');
+```
+
+
+## Langkah 4 — Membuat View AJAX
+
+Buat folder `app/Views/ajax/` lalu buat file `index.php`:
+
+```php
+<?= $this->include('template/header'); ?>
+
+<h1>Data Artikel (AJAX)</h1>
+
+<!-- Tombol Tambah -->
+<button class="btn" id="btnTambah" style="margin-bottom:15px;">+ Tambah Artikel</button>
+
+<!-- Form Tambah/Edit -->
+<div id="formContainer" style="display:none;">
+    <h3 id="formTitle">Tambah Artikel</h3>
+    <input type="hidden" id="artikelId">
+    <p>
+        <label>Judul</label>
+        <input type="text" id="inputJudul" placeholder="Judul artikel">
+    </p>
+    <p>
+        <label>Isi</label>
+        <textarea id="inputIsi" rows="5"></textarea>
+    </p>
+    <p>
+        <label>Kategori ID</label>
+        <input type="number" id="inputKategori" placeholder="ID Kategori">
+    </p>
+    <button class="btn" id="btnSimpan">Simpan</button>
+    <button class="btn btn-danger" id="btnBatal">Batal</button>
+</div>
+
+<!-- Tabel Data -->
+<table class="table" id="artikelTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Judul</th>
+            <th>Status</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td colspan="4">Loading data...</td></tr>
+    </tbody>
+</table>
+
+<script src="<?= base_url('assets/js/jquery-3.6.0.min.js') ?>"></script>
+<script>
+$(document).ready(function () {
+
+    function loadData() {
+        $('#artikelTable tbody').html('<tr><td colspan="4">Loading data...</td></tr>');
+        $.ajax({
+            url: "<?= base_url('ajax/getData') ?>",
+            method: "GET",
+            dataType: "json",
+            success: function (data) {
+                var tableBody = "";
+                if (data.length === 0) {
+                    tableBody = '<tr><td colspan="4">Belum ada data.</td></tr>';
+                } else {
+                    for (var i = 0; i < data.length; i++) {
+                        var row = data[i];
+                        tableBody += '<tr>';
+                        tableBody += '<td>' + row.id + '</td>';
+                        tableBody += '<td><b>' + row.judul + '</b></td>';
+                        tableBody += '<td>' + (row.status == 1 ? 'Aktif' : 'Draft') + '</td>';
+                        tableBody += '<td>';
+                        tableBody += '<a href="#" class="btn btn-edit" data-id="' + row.id + '">Ubah</a> ';
+                        tableBody += '<a href="#" class="btn btn-danger btn-delete" data-id="' + row.id + '">Hapus</a>';
+                        tableBody += '</td>';
+                        tableBody += '</tr>';
+                    }
+                }
+                $('#artikelTable tbody').html(tableBody);
+            }
+        });
+    }
+
+    loadData();
+
+    $('#btnTambah').on('click', function () {
+        $('#formTitle').text('Tambah Artikel');
+        $('#artikelId, #inputJudul, #inputIsi, #inputKategori').val('');
+        $('#formContainer').slideDown();
+    });
+
+    $('#btnBatal').on('click', function () {
+        $('#formContainer').slideUp();
+    });
+
+    $('#btnSimpan').on('click', function () {
+        var id    = $('#artikelId').val();
+        var judul = $('#inputJudul').val();
+        var isi   = $('#inputIsi').val();
+        var kat   = $('#inputKategori').val();
+
+        if (judul === '') { alert('Judul tidak boleh kosong!'); return; }
+
+        var url = id ? "<?= base_url('ajax/update/') ?>" + id : "<?= base_url('ajax/add') ?>";
+
+        $.ajax({
+            url: url,
+            method: "POST",
+            data: { judul: judul, isi: isi, id_kategori: kat },
+            dataType: "json",
+            success: function (data) {
+                if (data.status === 'OK') {
+                    $('#formContainer').slideUp();
+                    loadData();
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '.btn-edit', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        $.ajax({
+            url: "<?= base_url('ajax/getById/') ?>" + id,
+            method: "GET",
+            dataType: "json",
+            success: function (data) {
+                $('#formTitle').text('Edit Artikel');
+                $('#artikelId').val(data.id);
+                $('#inputJudul').val(data.judul);
+                $('#inputIsi').val(data.isi);
+                $('#inputKategori').val(data.id_kategori);
+                $('#formContainer').slideDown();
+                $('html, body').animate({ scrollTop: 0 }, 300);
+            }
+        });
+    });
+
+    $(document).on('click', '.btn-delete', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        if (confirm('Yakin ingin menghapus artikel ini?')) {
+            $.ajax({
+                url: "<?= base_url('ajax/delete/') ?>" + id,
+                method: "DELETE",
+                dataType: "json",
+                success: function (data) {
+                    if (data.status === 'OK') { loadData(); }
+                }
+            });
+        }
+    });
+
+});
+</script>
+
+<?= $this->include('template/footer'); ?>
+```
+
+### Langkah 5 — Hasil Pengujian
+
+#### Tampilan Halaman AJAX
+Buka `http://localhost:8080/ajax` — tabel data artikel dimuat otomatis via AJAX.
+
+> **Screenshot:**
+> ![Halaman AJAX](screenshots/p8_hasil.png)
+
+#### Uji Tambah Artikel
+Klik tombol **+ Tambah Artikel**, isi form, klik **Simpan** — data langsung muncul di tabel tanpa reload.
+
+> **Screenshot:**
+> ![Tambah via AJAX](screenshots/p8_tambah.png)
+
+#### Uji Edit Artikel
+Klik tombol **Ubah** — form terisi otomatis dengan data artikel, ubah dan klik **Simpan**.
+
+> **Screenshot:**
+> ![Edit via AJAX](screenshots/p8_edit.png)
+
+#### Uji Hapus Artikel
+Klik tombol **Hapus** — muncul konfirmasi, setelah dikonfirmasi data hilang dari tabel tanpa reload.
+
+> **Screenshot:**
+> ![Hapus via AJAX](screenshots/p8_hapus.png)
+
+#### Uji Endpoint JSON
+Buka `http://localhost:8080/ajax/getData` — menampilkan data artikel dalam format JSON.
+
+> **Screenshot:**
+> ![JSON Response](screenshots/p8_json.png)
+
+---
+
+## Cara Uji Coba
+
+| URL | Fungsi |
+|---|---|
+| `http://localhost:8080/ajax` | Halaman utama AJAX |
+| `http://localhost:8080/ajax/getData` | Lihat data JSON semua artikel |
+| `http://localhost:8080/ajax/getById/1` | Lihat data JSON artikel ID 1 |
+
+---
+
+
 
 
 
