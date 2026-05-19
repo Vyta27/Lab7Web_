@@ -139,7 +139,7 @@ class Home extends BaseController
 ```
 
 ## Langkah 10
-- Membuat View
+- Membuat View 
 - file : `app/Views/about.php`
 
 ```
