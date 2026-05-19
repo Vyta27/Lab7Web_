@@ -2143,10 +2143,7 @@ public/
         └── jquery-3.6.0.min.js
 ```
 
-> **Screenshot:**
-> ![Download jQuery](screenshots/p8_jquery_folder.png)
-
----
+<img width="1902" height="999" alt="Image" src="https://github.com/user-attachments/assets/5a713509-2be2-4811-99ad-3aaaacba6bc5" />
 
 ## Langkah 2 — Membuat AjaxController
 
@@ -2215,7 +2212,7 @@ class AjaxController extends Controller
 }
 ```
 
-### Langkah 3 — Menambahkan Route
+## Langkah 3 — Menambahkan Route
 
 Buka `app/Config/Routes.php` dan tambahkan route AJAX:
 
@@ -2388,37 +2385,10 @@ $(document).ready(function () {
 
 ### Langkah 5 — Hasil Pengujian
 
-#### Tampilan Halaman AJAX
-Buka `http://localhost:8080/ajax` — tabel data artikel dimuat otomatis via AJAX.
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/90a3e136-5a41-41a1-ab86-6f3bbde6ca2f" />
 
-> **Screenshot:**
-> ![Halaman AJAX](screenshots/p8_hasil.png)
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/a4fcd232-7861-4605-a184-c8693b3a544a" />
 
-#### Uji Tambah Artikel
-Klik tombol **+ Tambah Artikel**, isi form, klik **Simpan** — data langsung muncul di tabel tanpa reload.
-
-> **Screenshot:**
-> ![Tambah via AJAX](screenshots/p8_tambah.png)
-
-#### Uji Edit Artikel
-Klik tombol **Ubah** — form terisi otomatis dengan data artikel, ubah dan klik **Simpan**.
-
-> **Screenshot:**
-> ![Edit via AJAX](screenshots/p8_edit.png)
-
-#### Uji Hapus Artikel
-Klik tombol **Hapus** — muncul konfirmasi, setelah dikonfirmasi data hilang dari tabel tanpa reload.
-
-> **Screenshot:**
-> ![Hapus via AJAX](screenshots/p8_hapus.png)
-
-#### Uji Endpoint JSON
-Buka `http://localhost:8080/ajax/getData` — menampilkan data artikel dalam format JSON.
-
-> **Screenshot:**
-> ![JSON Response](screenshots/p8_json.png)
-
----
 
 ## Cara Uji Coba
 
