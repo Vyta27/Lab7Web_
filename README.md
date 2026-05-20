@@ -2640,6 +2640,253 @@ $(document).ready(function () {
 
 
 
+# Praktikum 10 - REST API
+
+
+## Langkah 1 — Persiapan: Install Postman
+
+Download dan install Postman dari https://www.postman.com/downloads/
+
+Postman adalah aplikasi REST Client untuk melakukan testing REST API tanpa perlu membuat tampilan frontend.
+
+
+## Langkah 2 — Membuat REST Controller
+
+Buat file baru `app/Controllers/Post.php`:
+
+```php
+<?php
+namespace App\Controllers;
+
+use CodeIgniter\RESTful\ResourceController;
+use CodeIgniter\API\ResponseTrait;
+use App\Models\ArtikelModel;
+
+class Post extends ResourceController
+{
+    use ResponseTrait;
+
+    // GET /post — tampilkan semua data
+    public function index()
+    {
+        $model = new ArtikelModel();
+        $data['artikel'] = $model->orderBy('id', 'DESC')->findAll();
+        return $this->respond($data);
+    }
+
+    // POST /post — tambah data baru
+    public function create()
+    {
+        $model = new ArtikelModel();
+        $data = [
+            'judul' => $this->request->getVar('judul'),
+            'isi'   => $this->request->getVar('isi'),
+        ];
+        $model->insert($data);
+        $response = [
+            'status'   => 201,
+            'error'    => null,
+            'messages' => ['success' => 'Data artikel berhasil ditambahkan.']
+        ];
+        return $this->respondCreated($response);
+    }
+
+    // GET /post/{id} — tampilkan data spesifik
+    public function show($id = null)
+    {
+        $model = new ArtikelModel();
+        $data  = $model->where('id', $id)->first();
+        if ($data) {
+            return $this->respond($data);
+        } else {
+            return $this->failNotFound('Data tidak ditemukan.');
+        }
+    }
+
+    // PUT /post/{id} — ubah data
+    public function update($id = null)
+    {
+        $model = new ArtikelModel();
+        $data  = [
+            'judul' => $this->request->getVar('judul'),
+            'isi'   => $this->request->getVar('isi'),
+        ];
+        $model->update($id, $data);
+        $response = [
+            'status'   => 200,
+            'error'    => null,
+            'messages' => ['success' => 'Data artikel berhasil diubah.']
+        ];
+        return $this->respond($response);
+    }
+
+    // DELETE /post/{id} — hapus data
+    public function delete($id = null)
+    {
+        $model = new ArtikelModel();
+        $data  = $model->where('id', $id)->delete($id);
+        if ($data) {
+            $model->delete($id);
+            $response = [
+                'status'   => 200,
+                'error'    => null,
+                'messages' => ['success' => 'Data artikel berhasil dihapus.']
+            ];
+            return $this->respondDeleted($response);
+        } else {
+            return $this->failNotFound('Data tidak ditemukan.');
+        }
+    }
+}
+```
+
+## Langkah 3 — Membuat Routing REST API
+
+Buka `app/Config/Routes.php`, tambahkan **1 baris** sebelum `$routes->setAutoRoute(true)`:
+
+```php
+$routes->resource('post');
+```
+
+Satu baris ini otomatis menghasilkan semua endpoint CRUD:
+
+```
+GET     /post           → Post::index
+POST    /post           → Post::create
+GET     /post/{id}      → Post::show
+PUT     /post/{id}      → Post::update
+DELETE  /post/{id}      → Post::delete
+```
+
+## Langkah 4 — Testing REST API dengan Postman
+
+### GET — Menampilkan Semua Data
+
+- Method: **GET**
+- URL: `http://localhost:8080/post`
+- Klik **Send**
+
+Response yang diharapkan (200 OK):
+```json
+{
+    "artikel": [
+        {
+            "id": "16",
+            "judul": "Kecerdasan Buatan Mengubah Dunia Kerja",
+            "isi": "...",
+            "gambar": null,
+            "status": "0",
+            "slug": "kecerdasan-buatan-mengubah-dunia-kerja",
+            "created_at": "2026-05-20 10:20:25",
+            "id_kategori": "1"
+        }
+    ]
+}
+```
+
+![GET Semua Data](screenshots/p10_get_all.png)
+
+---
+
+### GET — Menampilkan Data Spesifik
+
+- Method: **GET**
+- URL: `http://localhost:8080/post/3`
+- Klik **Send**
+
+Response yang diharapkan (200 OK):
+```json
+{
+    "id": "3",
+    "judul": "Artikel",
+    "isi": "...",
+    "gambar": "tumblr-kucing-8_1.jpg",
+    "status": "0",
+    "slug": "artikel"
+}
+```
+
+![GET Data Spesifik](screenshots/p10_get_single.png)
+
+---
+
+### POST — Menambahkan Data Baru
+
+- Method: **POST**
+- URL: `http://localhost:8080/post`
+- Tab **Body** → pilih **x-www-form-urlencoded**
+- Isi KEY dan VALUE:
+
+| KEY | VALUE |
+|-----|-------|
+| judul | Artikel Baru via API |
+| isi | Ini isi artikel yang ditambahkan melalui REST API |
+
+Response yang diharapkan (201 Created):
+```json
+{
+    "status": 201,
+    "error": null,
+    "messages": {
+        "success": "Data artikel berhasil ditambahkan."
+    }
+}
+```
+
+![POST Tambah Data](screenshots/p10_post.png)
+
+---
+
+### PUT — Mengubah Data
+
+- Method: **PUT**
+- URL: `http://localhost:8080/post/3`
+- Tab **Body** → pilih **x-www-form-urlencoded**
+- Isi KEY dan VALUE:
+
+| KEY | VALUE |
+|-----|-------|
+| judul | Artikel Diubah via API |
+| isi | Isi artikel sudah diubah melalui REST API |
+
+Response yang diharapkan (200 OK):
+```json
+{
+    "status": 200,
+    "error": null,
+    "messages": {
+        "success": "Data artikel berhasil diubah."
+    }
+}
+```
+
+![PUT Ubah Data](screenshots/p10_put.png)
+
+---
+
+#### DELETE — Menghapus Data
+
+- Method: **DELETE**
+- URL: `http://localhost:8080/post/14`
+- Klik **Send** (tidak perlu isi Body)
+
+Response yang diharapkan (200 OK):
+```json
+{
+    "status": 200,
+    "error": null,
+    "messages": {
+        "success": "Data artikel berhasil dihapus."
+    }
+}
+```
+
+![DELETE Hapus Data](screenshots/p10_delete.png)
+
+---
+
+
+
 
 
 
