@@ -2390,15 +2390,6 @@ $(document).ready(function () {
 <img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/a4fcd232-7861-4605-a184-c8693b3a544a" />
 
 
-## Cara Uji Coba
-
-| URL | Fungsi |
-|---|---|
-| `http://localhost:8080/ajax` | Halaman utama AJAX |
-| `http://localhost:8080/ajax/getData` | Lihat data JSON semua artikel |
-| `http://localhost:8080/ajax/getById/1` | Lihat data JSON artikel ID 1 |
-
----
 
 # Praktikum 9 - AJAX Pagination dan Pencarian
 
@@ -2635,40 +2626,17 @@ $(document).ready(function () {
 
 ## Hasil Praktikum
 
-### Halaman Admin Artikel dengan AJAX
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/af160c7b-ab3b-409f-bcb5-26bf2b004cd7" />
 
-![Hasil Praktikum 9](screenshots/p9_hasil.png)
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/d99bc744-0e67-4c81-85f8-e39d3ff08325" />
 
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/507b3f78-b5b7-43fc-aa78-c4f7a05310ca" />
 
-### Fitur Sorting Aktif
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/bb03bc4a-4de8-4c5d-874e-a629f30be221" />
 
-![Sorting](screenshots/p9_sorting.png)
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/8602a3e7-f535-42a4-a1a5-686dcbb0fc6a" />
 
-### Filter Kategori
-
-![Filter Kategori](screenshots/p9_filter.png)
-
-### Pencarian Artikel
-
-![Pencarian](screenshots/p9_search.png)
-
-
-## Ringkasan File yang Diubah
-
-| File | Perubahan |
-|---|---|
-| `app/Controllers/Artikel.php` | Method `admin_index()` — tambah parameter sorting, tambah respons JSON untuk AJAX |
-| `app/Views/artikel/admin_index.php` | Ganti render PHP statis dengan jQuery AJAX + tombol sorting |
-
-
-## Cara Uji Coba
-
-1. Buka `http://localhost:8080/admin/artikel`
-2. Ketik kata kunci di kotak pencarian → klik **Cari** → tabel berubah tanpa reload
-3. Pilih kategori dari dropdown → tabel langsung berubah tanpa reload
-4. Klik tombol **Judul A-Z** → data diurutkan tanpa reload
-5. Klik nomor halaman di pagination → pindah halaman tanpa reload
-6. Buka DevTools (F12) → tab **Network** → filter **XHR** untuk melihat request AJAX
+<img width="1920" height="937" alt="Image" src="https://github.com/user-attachments/assets/a634f317-b560-4a87-b053-c54648542b47" />
 
 
 
