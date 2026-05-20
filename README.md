@@ -2400,6 +2400,277 @@ $(document).ready(function () {
 
 ---
 
+# Praktikum 9 - AJAX Pagination dan Pencarian
+
+
+## Langkah 1 — Modifikasi Controller `admin_index()`
+
+Buka file `app/Controllers/Artikel.php` dan ubah method `admin_index()` agar dapat merespons request AJAX dengan mengembalikan JSON, serta mendukung parameter sorting.
+
+```php
+public function admin_index()
+{
+    $title       = 'Daftar Artikel';
+    $model       = new ArtikelModel();
+    $q           = $this->request->getVar('q') ?? '';
+    $kategori_id = $this->request->getVar('kategori_id') ?? '';
+    $page        = $this->request->getVar('page') ?? 1;
+
+    // Parameter sorting
+    $sort        = $this->request->getVar('sort')  ?? 'artikel.id';
+    $order       = $this->request->getVar('order') ?? 'asc';
+    $allowedSort = ['artikel.id', 'artikel.judul', 'kategori.nama_kategori', 'artikel.status'];
+    if (!in_array($sort, $allowedSort)) $sort = 'artikel.id';
+    $order = ($order === 'desc') ? 'desc' : 'asc';
+
+    $artikel = $model->select('artikel.*, kategori.nama_kategori')
+        ->join('kategori', 'kategori.id_kategori = artikel.id_kategori', 'left');
+
+    if ($q != '') {
+        $artikel->like('artikel.judul', $q);
+    }
+    if ($kategori_id != '') {
+        $artikel->where('artikel.id_kategori', $kategori_id);
+    }
+
+    $artikelData = $artikel->orderBy($sort, $order)->paginate(10, 'default', $page);
+    $pager       = $model->pager;
+
+    // Siapkan data pagination untuk JSON
+    $pagerLinks = [];
+    if ($pager) {
+        $totalPages  = $pager->getPageCount();
+        $currentPage = $pager->getCurrentPage();
+        for ($i = 1; $i <= $totalPages; $i++) {
+            $pagerLinks[] = [
+                'title'  => (string)$i,
+                'url'    => '/admin/artikel?page=' . $i,
+                'active' => ($i == $currentPage),
+            ];
+        }
+    }
+
+    $data = [
+        'title'       => $title,
+        'q'           => $q,
+        'kategori_id' => $kategori_id,
+        'artikel'     => $artikelData,
+        'pager'       => $pager,
+    ];
+
+    // Jika request AJAX, kembalikan JSON
+    if ($this->request->isAJAX()) {
+        return $this->response->setJSON([
+            'artikel'     => $artikelData,
+            'pager'       => ['links' => $pagerLinks],
+            'q'           => $q,
+            'kategori_id' => $kategori_id,
+        ]);
+    }
+
+    $kategoriModel    = new KategoriModel();
+    $data['kategori'] = $kategoriModel->findAll();
+
+    return view('artikel/admin_index', $data);
+}
+```
+
+## Langkah 2 — Modifikasi View `admin_index.php`
+
+Ganti seluruh isi `app/Views/artikel/admin_index.php` dengan implementasi AJAX menggunakan jQuery:
+
+```php
+<?= $this->include('template/admin_header'); ?>
+
+<h2><?= $title; ?></h2>
+
+<!-- Form Pencarian dan Filter Kategori -->
+<form id="search-form" class="form-search">
+    <input type="text" name="q" id="search-box" value="<?= $q; ?>" 
+           placeholder="Cari judul artikel">
+    <select name="kategori_id" id="category-filter">
+        <option value="">Semua Kategori</option>
+        <?php foreach ($kategori as $k): ?>
+        <option value="<?= $k['id_kategori']; ?>" 
+            <?= ($kategori_id == $k['id_kategori']) ? 'selected' : ''; ?>>
+            <?= $k['nama_kategori']; ?>
+        </option>
+        <?php endforeach; ?>
+    </select>
+    <input type="submit" value="Cari" class="btn btn-primary">
+</form>
+
+<!-- Tombol Sorting -->
+<div style="margin-bottom:10px; margin-top:10px;">
+    <span style="font-weight:600; font-size:13px; color:#9e1068;">Urutkan:</span>
+    <button class="btn-sort btn" data-sort="artikel.id" data-order="asc">ID ↑</button>
+    <button class="btn-sort btn" data-sort="artikel.id" data-order="desc">ID ↓</button>
+    <button class="btn-sort btn" data-sort="artikel.judul" data-order="asc">Judul A-Z</button>
+    <button class="btn-sort btn" data-sort="artikel.judul" data-order="desc">Judul Z-A</button>
+    <button class="btn-sort btn" data-sort="kategori.nama_kategori" data-order="asc">Kategori A-Z</button>
+</div>
+
+<!-- Loading Indicator -->
+<div id="loading" style="display:none; padding:20px; text-align:center; color:#eb2f96;">
+    ⏳ Memuat data...
+</div>
+
+<!-- Container tabel dan pagination (diisi oleh JavaScript) -->
+<div id="article-container"></div>
+<div id="pagination-container"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+
+    let currentSort  = 'artikel.id';
+    let currentOrder = 'asc';
+
+    // Fungsi utama: ambil data via AJAX
+    const fetchData = (url) => {
+        $('#loading').show();
+        $('#article-container').hide();
+        $('#pagination-container').hide();
+
+        // Tambahkan parameter sort ke URL
+        let sep = url.includes('?') ? '&' : '?';
+        url = `${url}${sep}sort=${currentSort}&order=${currentOrder}`;
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'json',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            success: function (data) {
+                renderArticles(data.artikel);
+                renderPagination(data.pager, data.q, data.kategori_id);
+                $('#loading').hide();
+                $('#article-container').show();
+                $('#pagination-container').show();
+            },
+            error: function () {
+                $('#loading').hide();
+                $('#article-container').html('<p style="color:red;">Gagal memuat data.</p>').show();
+            }
+        });
+    };
+
+    // Render tabel artikel dari data JSON
+    const renderArticles = (articles) => {
+        let html = '<table class="table">';
+        html += '<thead><tr><th>ID</th><th>Judul</th><th>Kategori</th><th>Status</th><th>Aksi</th></tr></thead><tbody>';
+
+        if (articles && articles.length > 0) {
+            articles.forEach(a => {
+                html += `<tr>
+                    <td>${a.id}</td>
+                    <td><b>${a.judul}</b><p><small>${a.isi ? a.isi.substring(0, 50) : ''}</small></p></td>
+                    <td>${a.nama_kategori ?? '-'}</td>
+                    <td>${a.status == 1 ? 'Aktif' : 'Draft'}</td>
+                    <td>
+                        <a class="btn" href="/admin/artikel/edit/${a.id}">Ubah</a>
+                        <a class="btn btn-danger" onclick="return confirm('Yakin menghapus?');"
+                           href="/admin/artikel/delete/${a.id}">Hapus</a>
+                    </td>
+                </tr>`;
+            });
+        } else {
+            html += '<tr><td colspan="5">Tidak ada data.</td></tr>';
+        }
+        html += '</tbody></table>';
+        $('#article-container').html(html);
+    };
+
+    // Render pagination dari data JSON
+    const renderPagination = (pager, q, kategori_id) => {
+        if (!pager || !pager.links || pager.links.length <= 1) {
+            $('#pagination-container').html('');
+            return;
+        }
+        let html = '<ul class="pagination">';
+        pager.links.forEach(link => {
+            let url = link.url ? `${link.url}&q=${q ?? ''}&kategori_id=${kategori_id ?? ''}` : '#';
+            html += `<li class="page-item ${link.active ? 'active' : ''}">
+                        <a class="page-link ajax-page" href="${url}">${link.title}</a>
+                     </li>`;
+        });
+        html += '</ul>';
+        $('#pagination-container').html(html);
+    };
+
+    // Submit form pencarian
+    $('#search-form').on('submit', function (e) {
+        e.preventDefault();
+        fetchData(`/admin/artikel?q=${$('#search-box').val()}&kategori_id=${$('#category-filter').val()}`);
+    });
+
+    // Filter kategori berubah → otomatis load
+    $('#category-filter').on('change', function () {
+        $('#search-form').trigger('submit');
+    });
+
+    // Klik tombol pagination
+    $(document).on('click', '.ajax-page', function (e) {
+        e.preventDefault();
+        const url = $(this).attr('href');
+        if (url !== '#') fetchData(url);
+    });
+
+    // Klik tombol sorting
+    $(document).on('click', '.btn-sort', function () {
+        $('.btn-sort').css('opacity', '1');
+        $(this).css('opacity', '0.6');
+        currentSort  = $(this).data('sort');
+        currentOrder = $(this).data('order');
+        fetchData(`/admin/artikel?q=${$('#search-box').val()}&kategori_id=${$('#category-filter').val()}`);
+    });
+
+    // Load data pertama kali saat halaman dibuka
+    fetchData('/admin/artikel');
+});
+</script>
+
+<?= $this->include('template/admin_footer'); ?>
+```
+
+## Hasil Praktikum
+
+### Halaman Admin Artikel dengan AJAX
+
+![Hasil Praktikum 9](screenshots/p9_hasil.png)
+
+
+### Fitur Sorting Aktif
+
+![Sorting](screenshots/p9_sorting.png)
+
+### Filter Kategori
+
+![Filter Kategori](screenshots/p9_filter.png)
+
+### Pencarian Artikel
+
+![Pencarian](screenshots/p9_search.png)
+
+
+## Ringkasan File yang Diubah
+
+| File | Perubahan |
+|---|---|
+| `app/Controllers/Artikel.php` | Method `admin_index()` — tambah parameter sorting, tambah respons JSON untuk AJAX |
+| `app/Views/artikel/admin_index.php` | Ganti render PHP statis dengan jQuery AJAX + tombol sorting |
+
+
+## Cara Uji Coba
+
+1. Buka `http://localhost:8080/admin/artikel`
+2. Ketik kata kunci di kotak pencarian → klik **Cari** → tabel berubah tanpa reload
+3. Pilih kategori dari dropdown → tabel langsung berubah tanpa reload
+4. Klik tombol **Judul A-Z** → data diurutkan tanpa reload
+5. Klik nomor halaman di pagination → pindah halaman tanpa reload
+6. Buka DevTools (F12) → tab **Network** → filter **XHR** untuk melihat request AJAX
+
+
 
 
 
