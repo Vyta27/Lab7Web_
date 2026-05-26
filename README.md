@@ -2784,9 +2784,7 @@ Response yang diharapkan (200 OK):
 }
 ```
 
-![GET Semua Data](screenshots/p10_get_all.png)
-
----
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/a19e309d-23a9-48c6-bd67-c84e96ca0d2a" />
 
 ### GET — Menampilkan Data Spesifik
 
@@ -2806,9 +2804,7 @@ Response yang diharapkan (200 OK):
 }
 ```
 
-![GET Data Spesifik](screenshots/p10_get_single.png)
-
----
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/d7993b37-59ab-494a-bf27-1aef9f5c62a3" />
 
 ### POST — Menambahkan Data Baru
 
@@ -2833,9 +2829,8 @@ Response yang diharapkan (201 Created):
 }
 ```
 
-![POST Tambah Data](screenshots/p10_post.png)
 
----
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/ae1e1caf-7355-47a4-99bc-b310923a80d4" />
 
 ### PUT — Mengubah Data
 
@@ -2860,9 +2855,8 @@ Response yang diharapkan (200 OK):
 }
 ```
 
-![PUT Ubah Data](screenshots/p10_put.png)
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/3d3e72d0-9ab8-4bd7-bb6d-6f76666dca22" />
 
----
 
 #### DELETE — Menghapus Data
 
@@ -2880,10 +2874,7 @@ Response yang diharapkan (200 OK):
     }
 }
 ```
-
-![DELETE Hapus Data](screenshots/p10_delete.png)
-
----
+<img width="1920" height="1008" alt="Image" src="https://github.com/user-attachments/assets/40523295-f417-4e3a-b2e6-b584a288250c" />
 
 
 
