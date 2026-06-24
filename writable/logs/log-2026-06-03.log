@@ -1,0 +1,236 @@
+CRITICAL - 2026-06-03 03:51:16 --> ErrorException: Undefined property: Config\Cors::$default
+[Method: GET, Route: post]
+in SYSTEMPATH\HTTP\Cors.php on line 72.
+ 1 SYSTEMPATH\HTTP\Cors.php(72): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: Config\\Cors::$default', 'C:\\xampp\\htdocs\\lab11_ci\\ci4\\system\\HTTP\\Cors.php', 72)
+ 2 SYSTEMPATH\Filters\Cors.php(94): CodeIgniter\HTTP\Cors::factory()
+ 3 SYSTEMPATH\Filters\Cors.php(107): CodeIgniter\Filters\Cors->createCorsService(null)
+ 4 SYSTEMPATH\Filters\Filters.php(278): CodeIgniter\Filters\Cors->after(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), null)
+ 5 SYSTEMPATH\Filters\Filters.php(225): CodeIgniter\Filters\Filters->runAfter([...])
+ 6 SYSTEMPATH\CodeIgniter.php(515): CodeIgniter\Filters\Filters->run('post', 'after')
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\lab11_ci\\ci4\\public\\index.php')
+CRITICAL - 2026-06-03 03:51:18 --> ErrorException: Undefined property: Config\Cors::$default
+[Method: GET, Route: post]
+in SYSTEMPATH\HTTP\Cors.php on line 72.
+ 1 SYSTEMPATH\HTTP\Cors.php(72): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: Config\\Cors::$default', 'C:\\xampp\\htdocs\\lab11_ci\\ci4\\system\\HTTP\\Cors.php', 72)
+ 2 SYSTEMPATH\Filters\Cors.php(94): CodeIgniter\HTTP\Cors::factory()
+ 3 SYSTEMPATH\Filters\Cors.php(107): CodeIgniter\Filters\Cors->createCorsService(null)
+ 4 SYSTEMPATH\Filters\Filters.php(278): CodeIgniter\Filters\Cors->after(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), null)
+ 5 SYSTEMPATH\Filters\Filters.php(225): CodeIgniter\Filters\Filters->runAfter([...])
+ 6 SYSTEMPATH\CodeIgniter.php(515): CodeIgniter\Filters\Filters->run('post', 'after')
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\lab11_ci\\ci4\\public\\index.php')
+CRITICAL - 2026-06-03 03:51:19 --> ErrorException: Undefined property: Config\Cors::$default
+[Method: GET, Route: post]
+in SYSTEMPATH\HTTP\Cors.php on line 72.
+ 1 SYSTEMPATH\HTTP\Cors.php(72): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: Config\\Cors::$default', 'C:\\xampp\\htdocs\\lab11_ci\\ci4\\system\\HTTP\\Cors.php', 72)
+ 2 SYSTEMPATH\Filters\Cors.php(94): CodeIgniter\HTTP\Cors::factory()
+ 3 SYSTEMPATH\Filters\Cors.php(107): CodeIgniter\Filters\Cors->createCorsService(null)
+ 4 SYSTEMPATH\Filters\Filters.php(278): CodeIgniter\Filters\Cors->after(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), null)
+ 5 SYSTEMPATH\Filters\Filters.php(225): CodeIgniter\Filters\Filters->runAfter([...])
+ 6 SYSTEMPATH\CodeIgniter.php(515): CodeIgniter\Filters\Filters->run('post', 'after')
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\lab11_ci\\ci4\\public\\index.php')
+CRITICAL - 2026-06-03 03:51:20 --> ErrorException: Undefined property: Config\Cors::$default
+[Method: GET, Route: post]
+in SYSTEMPATH\HTTP\Cors.php on line 72.
+ 1 SYSTEMPATH\HTTP\Cors.php(72): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: Config\\Cors::$default', 'C:\\xampp\\htdocs\\lab11_ci\\ci4\\system\\HTTP\\Cors.php', 72)
+ 2 SYSTEMPATH\Filters\Cors.php(94): CodeIgniter\HTTP\Cors::factory()
+ 3 SYSTEMPATH\Filters\Cors.php(107): CodeIgniter\Filters\Cors->createCorsService(null)
+ 4 SYSTEMPATH\Filters\Filters.php(278): CodeIgniter\Filters\Cors->after(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), null)
+ 5 SYSTEMPATH\Filters\Filters.php(225): CodeIgniter\Filters\Filters->runAfter([...])
+ 6 SYSTEMPATH\CodeIgniter.php(515): CodeIgniter\Filters\Filters->run('post', 'after')
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\lab11_ci\\ci4\\public\\index.php')
+CRITICAL - 2026-06-03 03:51:20 --> ErrorException: Undefined property: Config\Cors::$default
+[Method: GET, Route: post]
+in SYSTEMPATH\HTTP\Cors.php on line 72.
+ 1 SYSTEMPATH\HTTP\Cors.php(72): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: Config\\Cors::$default', 'C:\\xampp\\htdocs\\lab11_ci\\ci4\\system\\HTTP\\Cors.php', 72)
+ 2 SYSTEMPATH\Filters\Cors.php(94): CodeIgniter\HTTP\Cors::factory()
+ 3 SYSTEMPATH\Filters\Cors.php(107): CodeIgniter\Filters\Cors->createCorsService(null)
+ 4 SYSTEMPATH\Filters\Filters.php(278): CodeIgniter\Filters\Cors->after(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), null)
+ 5 SYSTEMPATH\Filters\Filters.php(225): CodeIgniter\Filters\Filters->runAfter([...])
+ 6 SYSTEMPATH\CodeIgniter.php(515): CodeIgniter\Filters\Filters->run('post', 'after')
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\lab11_ci\\ci4\\public\\index.php')
+CRITICAL - 2026-06-03 03:51:21 --> ErrorException: Undefined property: Config\Cors::$default
+[Method: GET, Route: post]
+in SYSTEMPATH\HTTP\Cors.php on line 72.
+ 1 SYSTEMPATH\HTTP\Cors.php(72): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: Config\\Cors::$default', 'C:\\xampp\\htdocs\\lab11_ci\\ci4\\system\\HTTP\\Cors.php', 72)
+ 2 SYSTEMPATH\Filters\Cors.php(94): CodeIgniter\HTTP\Cors::factory()
+ 3 SYSTEMPATH\Filters\Cors.php(107): CodeIgniter\Filters\Cors->createCorsService(null)
+ 4 SYSTEMPATH\Filters\Filters.php(278): CodeIgniter\Filters\Cors->after(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), null)
+ 5 SYSTEMPATH\Filters\Filters.php(225): CodeIgniter\Filters\Filters->runAfter([...])
+ 6 SYSTEMPATH\CodeIgniter.php(515): CodeIgniter\Filters\Filters->run('post', 'after')
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\lab11_ci\\ci4\\public\\index.php')
+CRITICAL - 2026-06-03 03:51:21 --> ErrorException: Undefined property: Config\Cors::$default
+[Method: GET, Route: post]
+in SYSTEMPATH\HTTP\Cors.php on line 72.
+ 1 SYSTEMPATH\HTTP\Cors.php(72): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: Config\\Cors::$default', 'C:\\xampp\\htdocs\\lab11_ci\\ci4\\system\\HTTP\\Cors.php', 72)
+ 2 SYSTEMPATH\Filters\Cors.php(94): CodeIgniter\HTTP\Cors::factory()
+ 3 SYSTEMPATH\Filters\Cors.php(107): CodeIgniter\Filters\Cors->createCorsService(null)
+ 4 SYSTEMPATH\Filters\Filters.php(278): CodeIgniter\Filters\Cors->after(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), null)
+ 5 SYSTEMPATH\Filters\Filters.php(225): CodeIgniter\Filters\Filters->runAfter([...])
+ 6 SYSTEMPATH\CodeIgniter.php(515): CodeIgniter\Filters\Filters->run('post', 'after')
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\lab11_ci\\ci4\\public\\index.php')
+CRITICAL - 2026-06-03 03:51:21 --> ErrorException: Undefined property: Config\Cors::$default
+[Method: GET, Route: post]
+in SYSTEMPATH\HTTP\Cors.php on line 72.
+ 1 SYSTEMPATH\HTTP\Cors.php(72): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: Config\\Cors::$default', 'C:\\xampp\\htdocs\\lab11_ci\\ci4\\system\\HTTP\\Cors.php', 72)
+ 2 SYSTEMPATH\Filters\Cors.php(94): CodeIgniter\HTTP\Cors::factory()
+ 3 SYSTEMPATH\Filters\Cors.php(107): CodeIgniter\Filters\Cors->createCorsService(null)
+ 4 SYSTEMPATH\Filters\Filters.php(278): CodeIgniter\Filters\Cors->after(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), null)
+ 5 SYSTEMPATH\Filters\Filters.php(225): CodeIgniter\Filters\Filters->runAfter([...])
+ 6 SYSTEMPATH\CodeIgniter.php(515): CodeIgniter\Filters\Filters->run('post', 'after')
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\lab11_ci\\ci4\\public\\index.php')
+CRITICAL - 2026-06-03 03:51:22 --> ErrorException: Undefined property: Config\Cors::$default
+[Method: GET, Route: post]
+in SYSTEMPATH\HTTP\Cors.php on line 72.
+ 1 SYSTEMPATH\HTTP\Cors.php(72): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: Config\\Cors::$default', 'C:\\xampp\\htdocs\\lab11_ci\\ci4\\system\\HTTP\\Cors.php', 72)
+ 2 SYSTEMPATH\Filters\Cors.php(94): CodeIgniter\HTTP\Cors::factory()
+ 3 SYSTEMPATH\Filters\Cors.php(107): CodeIgniter\Filters\Cors->createCorsService(null)
+ 4 SYSTEMPATH\Filters\Filters.php(278): CodeIgniter\Filters\Cors->after(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), null)
+ 5 SYSTEMPATH\Filters\Filters.php(225): CodeIgniter\Filters\Filters->runAfter([...])
+ 6 SYSTEMPATH\CodeIgniter.php(515): CodeIgniter\Filters\Filters->run('post', 'after')
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\lab11_ci\\ci4\\public\\index.php')
+CRITICAL - 2026-06-03 03:51:24 --> ErrorException: Undefined property: Config\Cors::$default
+[Method: GET, Route: post]
+in SYSTEMPATH\HTTP\Cors.php on line 72.
+ 1 SYSTEMPATH\HTTP\Cors.php(72): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: Config\\Cors::$default', 'C:\\xampp\\htdocs\\lab11_ci\\ci4\\system\\HTTP\\Cors.php', 72)
+ 2 SYSTEMPATH\Filters\Cors.php(94): CodeIgniter\HTTP\Cors::factory()
+ 3 SYSTEMPATH\Filters\Cors.php(107): CodeIgniter\Filters\Cors->createCorsService(null)
+ 4 SYSTEMPATH\Filters\Filters.php(278): CodeIgniter\Filters\Cors->after(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), null)
+ 5 SYSTEMPATH\Filters\Filters.php(225): CodeIgniter\Filters\Filters->runAfter([...])
+ 6 SYSTEMPATH\CodeIgniter.php(515): CodeIgniter\Filters\Filters->run('post', 'after')
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\lab11_ci\\ci4\\public\\index.php')
+CRITICAL - 2026-06-03 04:17:57 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: OPTIONS, Route: post/19]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:03 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: OPTIONS, Route: post/19]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:27 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:31 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:32 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:33 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:33 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:34 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:34 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:34 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:35 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:35 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:35 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:36 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:36 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:36 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:36 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:18:37 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:21:34 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:22:40 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:22:42 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:23:56 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:23:58 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-03 04:24:20 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()

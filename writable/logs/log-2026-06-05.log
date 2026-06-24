@@ -1,0 +1,16 @@
+CRITICAL - 2026-06-05 08:34:48 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-05 08:34:49 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-05 08:35:57 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-06-05 08:36:02 --> ErrorException: Cannot declare class App\Controllers\Post, because the name is already in use
+[Method: GET, Route: post]
+in APPPATH\Config\Cors.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()

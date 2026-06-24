@@ -1,0 +1,36 @@
+</section>
+
+<?php $segment = service('uri')->getSegment(1); ?>
+
+<?php if ($segment != 'admin'): ?>
+<aside id="sidebar">
+
+    <div class="widget-box">
+        <h3 class="title">Widget Header</h3>
+        <ul>
+            <li><a href="#">Widget Link</a></li>
+            <li><a href="#">Widget Link</a></li>
+        </ul>
+    </div>
+
+    <div class="widget-box">
+        <h3 class="title">Widget Text</h3>
+        <p>
+            Vestibulum lorem elit, iaculis in nisl volutpat,
+            malesuada tincidunt arcu. Proin in leo fringilla,
+            vestibulum mi porta, faucibus felis.
+        </p>
+    </div>
+
+</aside>
+<?php endif; ?>
+
+</section>
+
+<footer>
+    <p>&copy; 2026 - Universitas Pelita Bangsa</p>
+</footer>
+
+</div>
+</body>
+</html>
